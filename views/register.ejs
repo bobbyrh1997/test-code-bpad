@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdminLTE 3 | Registration Page (v2)</title>
+
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <link rel="stylesheet" href="/css/sweetalert.min.css">
+  <link rel="stylesheet" href="/css/adminlte.min.css">
+  
+</head>
+<body class="hold-transition register-page">
+<div class="register-box">
+  <div class="card card-outline card-primary">
+    <div class="card-header text-center">
+      <span class="h2"><b>Sistem Pengelolaan Kendaraan</b></span>
+      <br><br>
+      <span>Badan Pengelolaan Aset Daerah DKI Jakarta</p>
+    </div>
+    <div class="card-body">
+      <p class="login-box-msg">Register Account</p>
+
+      <form>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control fullname" placeholder="Full name">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-user"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input type="email" class="form-control email" placeholder="Email">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-envelope"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input type="password" class="form-control password" placeholder="Password">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control nip" placeholder="NIP">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="far fa-id-card"></span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <!-- /.col -->
+          <div class="col-12">
+            <button type="submit" class="btn btn-primary btn-block register-btn">Register</button>
+          </div>
+          <!-- /.col -->
+        </div>
+      </form>
+
+      <a href="/" class="text-center">I already have account</a>
+    </div>
+    <!-- /.form-box -->
+  </div><!-- /.card -->
+</div>
+<!-- /.register-box -->
+
+<!-- jQuery -->
+<script src="/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/dist/js/adminlte.min.js"></script>
+<script src="/js/sweetalert.min.js"></script>
+<script>
+  $(".register-btn").on("click",function(e){
+    e.preventDefault();
+    let fullname = $(".fullname").val();
+    let email = $(".email").val();
+    let password = $(".password").val();
+    let nip = $(".nip").val();
+
+    $.ajax({
+        url : '/register-user',
+        method : 'POST',
+        data : {
+          fullname : fullname,
+          email : email,
+          password : password,
+          nip : nip
+        },
+        success : (result)=>{
+            if(result.code == 200){
+                swal("Register Success", "Please login to continue", "success");
+                setTimeout(function(){
+                    window.location.href='/'
+                },2000)
+            }
+        }
+    })
+})
+</script>
+</body>
+</html>

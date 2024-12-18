@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>Egogohub ERP | Sorry</title>
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+  <!--     Fonts and icons     -->
+  
+  <%- include('partial/partial_css.ejs') %>
+</head>
+
+<body class="">
+  <div class="wrapper ">
+      <!-- Navbar Sidebar -->
+      
+      <!-- Navbar Sidebar -->
+      <div class="panel-header panel-header-sm">
+      </div>
+      <div class="card card-error-handling">
+        <h1 class="oops-title">Oopss!!</h1>
+        <p style="text-align: center;">
+          <%-message.replace(/(?:\r\n|\r|\n)/g, '<br>')%>
+          <%-error%>
+        </p>
+        <div class="error-handling-footer">
+          <button class="btn-back btn btn-primary btn-block">Back to previous page</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  <%- include('partial/partial_js.ejs') %>
+</body>
+
+</html>

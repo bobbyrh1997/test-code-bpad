@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><%= title %></title>
+<link rel="icon" type="image/png" href="/img/favicon.ico"/>
+<%- include('../partial/partial_css.ejs') %>
+<style>
+
+    .table>caption+thead>tr:first-child>td, .table>caption+thead>tr:first-child>th, .table>colgroup+thead>tr:first-child>td, .table>colgroup+thead>tr:first-child>th, .table>thead:first-child>tr:first-child>td, .table>thead:first-child>tr:first-child>th {
+        background-color: #f4f6f9 !important;
+    }
+
+    #filter-product {
+        box-shadow: 2px 1px #323e47;
+        width: 200px;
+    }
+
+    .buttons-excel{
+        background-color: #323e47 !important;
+        color: white;
+        position: absolute;
+        left: 95px;
+        top: 65px;
+    }
+    .buttons-excel:hover{
+        background-color: #51595f !important;
+        color: white;
+    }
+    
+    
+    .table-striped {
+        border: 1px solid rgb(235, 235, 235);
+        padding: 20px 20px 20px 20px !important;
+    }
+    .loader-tab{
+        background-color: white;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 80%;
+        border-radius: 20px;
+    }
+    .dataTables_filter {
+        margin-right: 15em;
+    }
+    .select-delete {
+        position: absolute;
+        top: 5em;
+    }
+    .table>caption+thead>tr:first-child>td, .table>caption+thead>tr:first-child>th, .table>colgroup+thead>tr:first-child>td, .table>colgroup+thead>tr:first-child>th, .table>thead:first-child>tr:first-child>td, .table>thead:first-child>tr:first-child>th{
+
+        background-color: #51595f !important; 
+        color: white;
+        /* font-size: smaller; */
+    }
+    .table>tbody>tr>td, .table-bordered>tfoot>tr>th {
+        font-size: smaller;
+    }
+    .page-item.active .page-link{
+        background-color: #51595f !important; 
+        border-color: #51595f !important;
+        color: white;
+    }
+    /* .sorting  {
+    } */
+    @media only screen and (max-width: 756px) {
+        .buttons-excel{
+            /* background-color: #3ad074 !important; */
+            color: white;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+        }
+
+        
+    }
+    @media only screen and (max-width: 479px) {
+        label:not(.form-check-label):not(.custom-file-label) {
+            display: table-caption !important;
+        }
+
+    }
+</style>
+</head>
+<body id="body">
+    <%- include('../partial/partial_header.ejs') %>
+    <%- include('../partial/partial_footer.ejs') %>
+    <!-- Body -->
+    <div class="wrapper">
+        <div class="content-wrapper">
+            <!-- Content Header -->
+            <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Email Brand | <b class="keteragan">Template</b> </h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Email Brand</a></li>
+                    <li class="breadcrumb-item active keteragan">Template</li>
+                    </ol>
+                </div>
+                </div>
+            </div>
+            </div>
+            <!-- End Content Header -->
+            <!-- Content -->
+            <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                <section class="col-lg-12 connectedSortable ui-sortable">
+                    <div class="card" style="position: relative; left: 0px; top: 0px;">
+
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <!-- Week -->
+                            <div class="card p-4" style="margin-bottom: 30px;">
+                                <!-- <h5>Week Date: <span id="weekDate" style="font-size: small;" class="text-muted">-</span> </h5> -->
+                                <h5 style="padding-left: 2%">Yesterday - <span style="font-size: 14px;" class="text-muted" id="yesterday"></span></h5>
+                                <div class="table-responsive">
+                                    <table id="table-currentmonth-management" class="table table-bordered table-striped no-margin display dataTable">
+                                        <thead>
+                                            <tr class="info" role="row" style="width: 100%;">
+                                                <th class="text-center sorting_disabled" rowspan="1" colspan="1" style="width: 5%;">No.</th>
+                                                <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 13%;">Brand</th>
+                                                <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 16%;">PIC</th>
+                                                <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 13%;">GMV Total (Rp)</th>
+                                                <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 11%;">GMV Total (USD)</th>
+                                                <th class="text-center sorting_disabled" rowspan="1" colspan="1" style="width: 9%;">Order</th>
+                                                <th class="text-center sorting_disabled" rowspan="1" colspan="1" style="width: 9%;">Sold Qty.</th>
+                                                <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 9%;">Avg. Order Size (Rp)</th>
+                                                <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 9%;">Avg. Order Size (USD)</th>
+                                                <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 9%;">Avg. Product Price (Rp)</th>
+                                                <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 9%;">Avg. Product Price (USD)</th>
+                                                <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 9%;">Monthly Target</th>
+                                                <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 9%;">VS Monthly Target</th>
+                                                <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 9%;">Marketing Spending</th>
+                                                <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 9%;">ROAS</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th colspan="3" style="text-align: center; font-size: revert;">TOTAL</th>
+                                                <th style="display: none;"></th>
+                                                <th style="display: none;"></th>
+                                                <th id="total-gmv-rp">-</th>
+                                                <th id="total-gmv-usd">-</th>
+                                                <th id="total-order">-</th>
+                                                <th id="total-sold">-</th>
+                                                <th id="total-avg-order-rp">-</th>
+                                                <th id="total-avg-order">-</th>
+                                                <th id="total-avg-price-rp">-</th>
+                                                <th id="total-avg-price">-</th>
+                                                <th id="total-monthly-target">-</th>
+                                                <th id="total-vsMonthly-target">-</th>
+                                                <th id="total-marketing-spending">-</th>
+                                                <th id="total-roas">-</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Month -->
+                            <h5 style="padding-left: 2%">Month-to-date - <span style="font-size: 14px;" class="text-muted" id="monthtodate"></span> </h5>
+                            <div class="table-responsive">
+                                <table id="table-monthtodate" class="table table-bordered table-striped no-margin display dataTable">
+                                    <thead>
+                                        <tr class="info" role="row" style="width: 100%;">
+                                            <th class="text-center sorting_disabled" rowspan="1" colspan="1" style="width: 5%;">No.</th>
+                                            <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 13%;">Brand</th>
+                                            <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 16%;">PIC</th>
+                                            <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 13%;">GMV Total (Rp)</th>
+                                            <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 11%;">GMV Total (USD)</th>
+                                            <th class="text-center sorting_disabled" rowspan="1" colspan="1" style="width: 9%;">Order</th>
+                                            <th class="text-center sorting_disabled" rowspan="1" colspan="1" style="width: 9%;">Sold Qty.</th>
+                                            <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 9%;">Avg. Order Size (Rp)</th>
+                                            <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 9%;">Avg. Order Size (USD)</th>
+                                            <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 9%;">Avg. Product Price (Rp)</th>
+                                            <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 9%;">Avg. Product Price (USD)</th>
+                                            <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 9%;">Annual Target</th>
+                                            <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 9%;">VS Annual Target</th>
+                                            <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 9%;">Marketing Spending</th>
+                                            <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 9%;">ROAS</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th colspan="3" style="text-align: center; font-size: revert;">TOTAL</th>
+                                            <th style="display: none;"></th>
+                                            <th style="display: none;"></th>
+                                            <th id="total-gmv-rp-month">-</th>
+                                            <th id="total-gmv-usd-month">-</th>
+                                            <th id="total-order-month">-</th>
+                                            <th id="total-sold-month">-</th>
+                                            <th id="total-avg-order-month-rp">-</th>
+                                            <th id="total-avg-order-month">-</th>
+                                            <th id="total-avg-price-month-rp">-</th>
+                                            <th id="total-avg-price-month">-</th>
+                                            <th id="total-mtdAnnual-target">-</th>
+                                            <th id="total-mtdVsAnnual-target">-</th>
+                                            <th id="total-mtdMarketing-spending">-</th>
+                                            <th id="total-mtdRoas">-</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <!-- Quarter -->
+                            <h5 style="padding-left: 2%">Quarter-to-day - <span style="font-size: 14px;" class="text-muted" id="quarter"></span> </h5>
+                            <div class="table-responsive">
+                                <table id="table-quarter" class="table table-bordered table-striped no-margin display dataTable">
+                                    <thead>
+                                        <tr class="info" role="row" style="width: 100%;">
+                                            <th class="text-center sorting_disabled" rowspan="1" colspan="1" style="width: 5%;">No.</th>
+                                            <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 13%;">Brand</th>
+                                            <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 16%;">PIC</th>
+                                            <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 13%;">GMV Total (Rp)</th>
+                                            <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 11%;">GMV Total (USD)</th>
+                                            <th class="text-center sorting_disabled" rowspan="1" colspan="1" style="width: 9%;">Order</th>
+                                            <th class="text-center sorting_disabled" rowspan="1" colspan="1" style="width: 9%;">Sold Qty.</th>
+                                            <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 9%;">Avg. Order Size (Rp)</th>
+                                            <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 9%;">Avg. Order Size (USD)</th>
+                                            <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 9%;">Avg. Product Price (Rp)</th>
+                                            <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 9%;">Avg. Product Price (USD)</th>
+
+                                            <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 9%;">Annual Target</th>
+                                            <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 9%;">VS Annual Target</th>
+                                            <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 9%;">Marketing Spending</th>
+                                            <th class="text-left sorting_disabled" rowspan="1" colspan="1" style="width: 9%;">ROAS</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th colspan="3" style="text-align: center; font-size: revert;">TOTAL</th>
+                                            <th style="display: none;"></th>
+                                            <th style="display: none;"></th>
+                                            <th id="total-gmv-rp-quarter">-</th>
+                                            <th id="total-gmv-usd-quarter">-</th>
+                                            <th id="total-order-quarter">-</th>
+                                            <th id="total-sold-quarter">-</th>
+                                            <th id="total-avg-order-quarter-rp">-</th>
+                                            <th id="total-avg-order-quarter">-</th>
+                                            <th id="total-avg-price-quarter-rp">-</th>
+                                            <th id="total-avg-price-quarter">-</th>
+
+                                            <th id="total-annualTarget-quarter">-</th>
+                                            <th id="total-vsAnnualTarget-quarter">-</th>
+                                            <th id="total-marketingSpending-quarter">-</th>
+                                            <th id="total-roas-quarter">-</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+
+                    </div>
+                </section>
+                </div>
+            </div>
+            </section>
+            <!-- Content -->
+        </div>
+    </div>
+
+    <!-- End Body -->
+    <%- include('../partial/partial_js.ejs') %>
+    <script type="text/javascript" src="//cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script>
+
+        
+function formatMoney(number) {
+    return number.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+}
+
+function formatMoneyUsd(number) {
+    return number.toLocaleString('es-US', { style: 'currency', currency: 'USD' });
+}
+
+function formatRibuan(number){
+    var reverse = number.toString().split('').reverse().join(''),
+    ribuan = reverse.match(/\d{1,3}/g);
+    ribuan = ribuan.join('.').split('').reverse().join('');
+    return ribuan;
+}
+
+
+// report yesterday
+let cdate = moment();
+
+let now = moment().format('YYYY-MM-DD');
+let month = 1 + moment(now, 'YYYY/MM/DD').month();
+
+let htmlYesterday = moment().subtract(1, 'days').format('YYYY/MM/DD')
+
+let htmlMonthtodate;
+
+let mtdStart;
+let mtdEnd;
+
+if (moment().subtract(1, 'days').format('MM') == moment().format('MM')) {
+    // htmlMonthtodate = moment().format('YYYY/MM') + '/01 - ' + moment().subtract(1, 'days').format('YYYY/MM/DD')
+
+    mtdStart = moment().format('YYYY-MM')+'-01'
+    mtdEnd = moment().subtract(1, 'days').format('YYYY-MM-DD')
+
+} else {
+    // htmlMonthtodate = moment().subtract(1, 'month').format('YYYY/MM') + '/01 - ' + moment().subtract(1, 'days').format('YYYY/MM/DD')
+
+    mtdStart = moment().subtract(1, 'month').format('YYYY-MM')+'-01'
+    mtdEnd = moment().subtract(1, 'days').format('YYYY-MM-DD')
+
+}
+
+let htmlQuarter;
+
+let stDateQuarter;
+let endDateQuarter;
+
+//Check by month
+if(month == '12'){
+    // Q4
+
+    if (moment().format('DD') == '01') {
+        htmlMonthtodate = moment().subtract(1, 'month').startOf('month').format('YYYY/MM/DD') + ' - ' + moment().subtract(1, 'month').endOf('month').format('YYYY/MM/DD')
+    } else {
+        htmlMonthtodate = moment().tz("Asia/Jakarta").format('YYYY/MM') + '/01 - ' + moment().utc().subtract(1, 'days').format('YYYY/MM/DD')
+    }
+    
+    htmlQuarter = moment().subtract(2, "month").startOf("month").format('YYYY/MM/') + '01 - ' + moment().subtract(1,'days').format('YYYY/MM/DD')
+
+    stDateQuarter = moment().subtract(2, "month").startOf("month").format('YYYY-MM-') + '01'
+    endDateQuarter = moment().subtract(1,'days').format('YYYY-MM-DD')
+
+} else if(month == '11'){
+    // Q4
+    if (moment().format('DD') == '01') {
+        htmlMonthtodate = moment().subtract(1, 'month').startOf('month').format('YYYY/MM/DD') + ' - ' + moment().subtract(1, 'month').endOf('month').format('YYYY/MM/DD')
+    } else {
+        htmlMonthtodate = moment().tz("Asia/Jakarta").format('YYYY/MM') + '/01 - ' + moment().utc().subtract(1, 'days').format('YYYY/MM/DD')
+    }
+
+    htmlQuarter = moment().subtract(1, "month").startOf("month").format('YYYY/MM/') + '01 - ' + moment().subtract(1,'days').format('YYYY/MM/DD')
+
+    stDateQuarter = moment().subtract(1, "month").startOf("month").format('YYYY-MM-') + '01'
+    endDateQuarter = moment().subtract(1,'days').format('YYYY-MM-DD')
+
+} else if (month == '10'){
+    // Q4
+
+    if (moment().format('DD') == '01') {
+        htmlMonthtodate = moment().subtract(1, 'month').startOf('month').format('YYYY/MM/DD') + ' - ' + moment().subtract(1, 'month').endOf('month').format('YYYY/MM/DD')
+        
+        htmlQuarter = moment().subtract(3, "month").startOf("month").format('YYYY/MM/') + '01 - '+ moment().subtract(1,'month').format('YYYY/MM/')+ '30'
+    
+        stDateQuarter = moment().subtract(3, "month").startOf("month").format('YYYY-MM-') + '01'
+        endDateQuarter = moment().subtract(1,'month').format('YYYY-MM-') + '30'
+    
+    }else {
+        htmlMonthtodate = moment().tz("Asia/Jakarta").format('YYYY/MM') + '/01 - ' + moment().utc().subtract(1, 'days').format('YYYY/MM/DD')
+
+        htmlQuarter = moment().format('YYYY/MM/') + '01 - '+ moment().subtract(1,'days').format('YYYY/MM/DD')
+    
+        stDateQuarter = moment().format('YYYY-MM-') + '01'
+        endDateQuarter = moment().subtract(1,'days').format('YYYY-MM-DD')
+    }
+
+} else if (month == '9' || month == '09'){
+    // Q3
+    if (moment().format('DD') == '01') {
+        htmlMonthtodate = moment().subtract(1, 'month').startOf('month').format('YYYY/MM/DD') + ' - ' + moment().subtract(1, 'month').endOf('month').format('YYYY/MM/DD')
+    } else {
+        htmlMonthtodate = moment().tz("Asia/Jakarta").format('YYYY/MM') + '/01 - ' + moment().utc().subtract(1, 'days').format('YYYY/MM/DD')
+    }
+
+    htmlQuarter = moment().subtract(2, "month").startOf("month").format('YYYY/MM/') + '01 - ' + moment().subtract(1,'days').format('YYYY/MM/DD')
+
+    stDateQuarter = moment().subtract(2, "month").startOf("month").format('YYYY-MM-') + '01'
+    endDateQuarter = moment().subtract(1,'days').format('YYYY-MM-DD')
+} else if (month == '8' || month == '08'){
+    // Q3
+
+    htmlQuarter = moment().subtract(1, "month").startOf("month").format('YYYY/MM/') + '01 - ' + moment().subtract(1,'days').format('YYYY/MM/DD')
+    if (moment().format('DD') == '01') {
+        htmlMonthtodate = moment().subtract(1, 'month').startOf('month').format('YYYY/MM/DD') + ' - ' + moment().subtract(1, 'month').endOf('month').format('YYYY/MM/DD')
+
+        stDateQuarter = moment().subtract(1, "month").startOf("month").format('YYYY-MM-') + '01'
+        endDateQuarter = moment().format('YYYY-MM-') + moment().format('DD')
+    } else {
+        htmlMonthtodate = moment().tz("Asia/Jakarta").format('YYYY/MM') + '/01 - ' + moment().utc().subtract(1, 'days').format('YYYY/MM/DD')
+
+        stDateQuarter = moment().subtract(1, "month").startOf("month").format('YYYY-MM-') + '01'
+        endDateQuarter = moment().format('YYYY-MM-') + moment().subtract(1,'days').format('DD')
+    }
+
+} else if (month == '7' || month == '07'){
+    // Q3
+
+    if (moment().format('DD') == '01') {
+        htmlMonthtodate = moment().subtract(1, 'month').startOf('month').format('YYYY/MM/DD') + ' - ' + moment().subtract(1, 'month').endOf('month').format('YYYY/MM/DD')
+        
+        htmlQuarter = moment().subtract(3, "month").startOf("month").format('YYYY/MM/') + '01 - '+ moment().subtract(1,'month').format('YYYY/MM/')+'30'
+        stDateQuarter = moment().subtract(3, "month").startOf("month").format('YYYY-MM-') + '01'
+        endDateQuarter = moment().format('YYYY-MM-') + moment().subtract(1,'month').format('DD')
+    } else {
+        htmlMonthtodate = moment().tz("Asia/Jakarta").format('YYYY/MM') + '/01 - ' + moment().utc().subtract(1, 'days').format('YYYY/MM/DD')
+
+        htmlQuarter = moment().format('YYYY/MM/') + '01 - '+ moment().subtract(1,'days').format('YYYY/MM/DD')
+    
+        stDateQuarter = moment().format('YYYY-MM-') + '01'
+        endDateQuarter = moment().format('YYYY-MM-') + moment().subtract(1,'days').format('DD')
+    }
+
+} else if (month == '6' || month == '06'){
+    // Q2
+
+    htmlQuarter = moment().subtract(2, "month").startOf("month").format('YYYY/MM/') + '01 - '+ moment().subtract(1,'days').format('YYYY/MM/DD')
+    if (moment().format('DD') == '01') {
+        htmlMonthtodate = moment().subtract(1, 'month').startOf('month').format('YYYY/MM/DD') + ' - ' + moment().subtract(1, 'month').endOf('month').format('YYYY/MM/DD')
+
+        stDateQuarter = moment().subtract(2, "month").startOf("month").format('YYYY-MM-') + '01'
+        endDateQuarter = moment().format('YYYY-MM-') + moment().format('DD')
+    } else {
+        htmlMonthtodate = moment().tz("Asia/Jakarta").format('YYYY/MM') + '/01 - ' + moment().utc().subtract(1, 'days').format('YYYY/MM/DD')
+        
+        stDateQuarter = moment().format('YYYY-MM-') + '01'
+        endDateQuarter = moment().format('YYYY-MM-') + moment().subtract(1,'days').format('DD')
+    }
+
+} else if(month == '5' || month == '05'){
+    // Q2
+    htmlQuarter = moment().subtract(1, "month").startOf("month").format('YYYY/MM/') + '01 - '+ moment().subtract(1,'days').format('YYYY/MM/DD')
+
+    if (moment().format('DD') == '01') {
+        htmlMonthtodate = moment().subtract(1, 'month').startOf('month').format('YYYY/MM/DD') + ' - ' + moment().subtract(1, 'month').endOf('month').format('YYYY/MM/DD')
+
+        stDateQuarter = moment().subtract(1, "month").startOf("month").format('YYYY-MM-') + '01'
+        endDateQuarter = moment().format('YYYY-MM-') + moment().format('DD')
+    } else {
+        htmlMonthtodate = moment().tz("Asia/Jakarta").format('YYYY/MM') + '/01 - ' + moment().utc().subtract(1, 'days').format('YYYY/MM/DD')
+        
+        stDateQuarter = moment().format('YYYY-MM-') + '01'
+        endDateQuarter = moment().format('YYYY-MM-') + moment().subtract(1,'days').format('DD')
+    }
+
+} else if (month == '4' || month == '04'){
+    // Q2
+    if (moment().format('DD') == '01') {
+        htmlMonthtodate = moment().subtract(1, 'month').startOf('month').format('YYYY/MM/DD') + ' - ' + moment().subtract(1, 'month').endOf('month').format('YYYY/MM/DD')
+        
+        htmlQuarter = moment().subtract(3, "month").startOf("month").format('YYYY/MM/') + '01 - '+ moment().subtract(1,'month').format('YYYY/MM/')+'31'
+        
+        stDateQuarter = moment().subtract(3, "month").startOf("month").format('YYYY-MM-') + '01'
+        endDateQuarter = moment().format('YYYY-MM-') + moment().format('DD')
+    } else {
+        htmlMonthtodate = moment().tz("Asia/Jakarta").format('YYYY/MM') + '/01 - ' + moment().utc().subtract(1, 'days').format('YYYY/MM/DD')
+
+        htmlQuarter = moment().format('YYYY/MM/') + '01 - '+ moment().subtract(1,'days').format('YYYY/MM/DD')
+        
+        stDateQuarter = moment().format('YYYY-MM-') + '01'
+        endDateQuarter = moment().format('YYYY-MM-') + moment().subtract(1,'days').format('DD')
+    }
+
+} else if(month == '3' || month == '03'){
+    //Q1
+    htmlQuarter = moment().subtract(2, "month").startOf("month").format('YYYY/MM/') + '01 - '+ moment().subtract(1,'days').format('YYYY/MM/DD')
+
+    if (moment().format('DD') == '01') {
+        htmlMonthtodate = moment().subtract(1, 'month').startOf('month').format('YYYY/MM/DD') + ' - ' + moment().subtract(1, 'month').endOf('month').format('YYYY/MM/DD')
+
+        stDateQuarter = moment().subtract(2, "month").startOf("month").format('YYYY-MM-') + '01'
+        endDateQuarter = moment().format('YYYY-MM-') + moment().format('DD')
+    } else {
+        htmlMonthtodate = moment().tz("Asia/Jakarta").format('YYYY/MM') + '/01 - ' + moment().utc().subtract(1, 'days').format('YYYY/MM/DD')
+
+        stDateQuarter = moment().subtract(2, "month").startOf("month").format('YYYY-MM-') + '01'
+        endDateQuarter = moment().format('YYYY-MM-') + moment().subtract(1,'days').format('DD')
+    }
+
+} else if (month == '2' || month == '02'){
+    // Q1
+    htmlQuarter = moment().subtract(1, "month").startOf("month").format('YYYY/MM/') + '01 - '+ moment().subtract(1,'days').format('YYYY/MM/DD')
+
+    if (moment().format('DD') == '01') {
+        htmlMonthtodate = moment().subtract(1, 'month').startOf('month').format('YYYY/MM/DD') + ' - ' + moment().subtract(1, 'month').endOf('month').format('YYYY/MM/DD')
+        
+        stDateQuarter = moment().subtract(1, "month").startOf("month").format('YYYY-MM-') + '01'
+        endDateQuarter = moment().format('YYYY-MM-') + moment().format('DD')
+    } else {
+        htmlMonthtodate = moment().tz("Asia/Jakarta").format('YYYY/MM') + '/01 - ' + moment().utc().subtract(1, 'days').format('YYYY/MM/DD')
+
+        stDateQuarter = moment().subtract(1, "month").startOf("month").format('YYYY-MM-') + '01'
+        endDateQuarter = moment().format('YYYY-MM-') + moment().subtract(1,'days').format('DD')
+    }
+
+} else if (month == '1' || month == '01'){
+    // Q1
+    htmlQuarter = moment().format('YYYY/MM/') + '01 - '+ moment().subtract(1,'days').format('YYYY/MM/DD')
+
+    if (moment().format('DD') == '01') {
+        htmlMonthtodate = moment().subtract(1, 'month').startOf('month').format('YYYY/MM/DD') + ' - ' + moment().subtract(1, 'month').endOf('month').format('YYYY/MM/DD')
+        
+        stDateQuarter = moment().format('YYYY-MM-') + '01'
+        endDateQuarter = moment().format('YYYY-MM-') + moment().format('DD')
+    } else {
+        htmlMonthtodate = moment().tz("Asia/Jakarta").format('YYYY/MM') + '/01 - ' + moment().utc().subtract(1, 'days').format('YYYY/MM/DD')
+
+        stDateQuarter = moment().format('YYYY-MM-') + '01'
+        endDateQuarter = moment().format('YYYY-MM-') + moment().subtract(1,'days').format('DD')
+    }
+
+
+
+} 
+$(document).ready(function(){
+    
+    let yesterdayData = moment().subtract(1, 'days').format('YYYY-MM-DD')
+    
+    $('#yesterday').html(htmlYesterday)
+    $.ajax({
+        method: 'GET',
+        url: `https://apimp.egogohub.tech/apidashboard.php?s=report_daily_yesterday`,
+        dataType: 'json',
+        success: function(result) {
+
+            //Request Marketing Target
+            $.ajax({ 
+                "url": "https://intranet.avconcept.com/api/erp-marketing/adv/selectMarketingTarget",
+                "method": "POST",
+                "timeout": 0,
+                "headers": {
+                    "Content-Type": "application/json",
+                },
+                "data": JSON.stringify({
+                    "startPeriod": yesterdayData,
+                    "endPeriod": yesterdayData,
+                    "currency": "IDR"
+                }),
+                success: function (resMT) {
+
+                    let dataResultMT = resMT.data.targetData.results
+
+                    //Request Marketing Spending
+                    $.ajax({ 
+                        "url": "https://intranet.avconcept.com/api/erp-marketing/adv/selectMarketingSpending",
+                        "method": "POST",
+                        "timeout": 0,
+                        "headers": {
+                            "Content-Type": "application/json",
+                        },
+                        "data": JSON.stringify({
+                            "region": "ID",
+                            "effDate": yesterdayData,
+                            "endDate": yesterdayData,
+                            "currency": "IDR"
+                        }),
+                        success: function (resMS) {
+                            let dataResultMS = resMS.data
+
+                            $("#table-currentmonth-management tbody").html("")
+                            $("#data-currentmonth-management tbody").html("")
+
+                            var maxads = 1;
+                            var txt1 = ""
+                            var txt2 = ""
+
+                            let totalGmvRp = 0
+                            let totalGmvUsd = 0
+                            let totalOrder = 0
+                            let totalSold = 0
+
+                            let totalMT = 0
+                            let totalMS = 0
+
+                            $.each(result, function(i, item) {
+
+                                let htmlMT;
+                                for (let i = 0; i < dataResultMT.length; i++) {
+                                    if (item.fk_brand == dataResultMT[i].brandCode) {
+                                        htmlMT = dataResultMT[i].monthlyTarget
+                                    }
+                                }
+
+                                let htmlMS;
+                                for (let i = 0; i < dataResultMS.length; i++) {
+                                    if (item.fk_brand == dataResultMS[i].idBrandCde) {
+                                        htmlMS = dataResultMS[i].amount
+                                    }
+                                }
+
+                                let monthlyTarget;
+                                let vsMtYes;
+                                if (htmlMT == undefined) {
+                                    monthlyTarget = 0
+                                } else {
+                                    monthlyTarget = htmlMT
+                                    vsMtYes = item.GMV_Total_Rp / monthlyTarget
+                                }
+
+                                let marketingSpending;
+                                let roasYes;
+                                if (htmlMS == undefined) {
+                                    marketingSpending = 0
+                                } else {
+                                    marketingSpending = htmlMS
+                                    roasYes = marketingSpending / item.GMV_Total_Rp
+                                }
+                                
+                                let vsMt;
+                                if (vsMtYes == undefined) {
+                                    vsMt = 0
+                                } else {
+                                    vsMt = vsMtYes
+                                }
+
+                                let roas;
+                                if (roasYes == undefined) {
+                                    roas = 0
+                                } else {
+                                    roas = roasYes
+                                }
+                                
+                                let avgOrderSize = item.GMV_Total_USD / item.Order_Count
+                                let avgOrderSizeRp = item.GMV_Total_Rp / item.Order_Count
+                                let avgProductPrice = item.GMV_Total_USD / item.Product_Sold
+                                let avgProductPriceRp = item.GMV_Total_Rp / item.Product_Sold
+                                let gmvUsd = parseFloat(item.GMV_Total_USD)
+
+
+                                totalGmvRp += Number(item.GMV_Total_Rp)
+                                totalGmvUsd += Number(item.GMV_Total_USD)
+                                totalOrder += Number(item.Order_Count)
+                                totalSold += Number(item.Product_Sold)
+
+                                totalMT += Number(monthlyTarget)
+                                totalMS += Number(marketingSpending)
+                                
+                                txt1 += '<tr>'
+                                txt1 += '<td style="text-align: center;">'+maxads+'</td>'
+                                txt1 += '<td><b>'+item.brand+'</b></td>'
+                                txt1 += '<td style="text-align: left;">'+item.nama+'</td>'
+                                txt1 += '<td style="text-align: left;">Rp '+parseInt(item.GMV_Total_Rp).toLocaleString()+'</td>'
+                                txt1 += '<td>'+formatMoneyUsd(gmvUsd)+'</td>'
+                                txt1 += '<td style="text-align: center;">'+parseInt(item.Order_Count).toLocaleString()+'</td>'
+                                txt1 += '<td style="text-align: center;">'+parseInt(item.Product_Sold).toLocaleString()+'</td>'
+                                txt1 += '<td style="text-align: left;">'+'Rp '+parseInt(avgOrderSizeRp).toLocaleString()+'</td>'
+                                txt1 += '<td style="text-align: left;">'+formatMoneyUsd(avgOrderSize)+'</td>'
+
+                                txt1 += '<td style="text-align: left;">'+'Rp '+parseInt(avgProductPriceRp).toLocaleString()+'</td>'
+                                txt1 += '<td style="text-align: left;">'+formatMoneyUsd(avgProductPrice)+'</td>'
+                                txt1 += `<td style="text-align: left;">${parseInt(monthlyTarget).toLocaleString()}</td>`
+                                txt1 += `<td style="text-align: left;">${vsMt.toFixed(2)}%</td>`
+                                txt1 += `<td style="text-align: left;">${parseInt(marketingSpending).toLocaleString()}</td>`
+                                txt1 += `<td style="text-align: left;">${roas.toFixed(2)}</td>`
+                                txt1 += '</tr>'
+
+                                //data
+                                txt2 += '<tr>'
+                                txt2 += '<td style="text-align: center;">'+maxads+'</td>'
+                                txt2 += '<td><b>'+item.brand+'</b></td>'
+                                txt2 += '<td style="text-align: left;">'+item.nama+'</td>'
+                                txt2 += '<td style="text-align: left;">'+parseInt(item.GMV_Total_Rp).toLocaleString()+'</td>'
+                                txt2 += '<td>'+formatMoneyUsd(gmvUsd)+'</td>'
+                                txt2 += '<td style="text-align: center;">'+item.Order_Count+'</td>'
+                                txt2 += '<td style="text-align: center;">'+item.Product_Sold+'</td>'
+                                txt2 += '<td style="text-align: left;">'+'Rp '+parseInt(avgOrderSizeRp).toLocaleString()+'</td>'
+                                txt2 += '<td style="text-align: left;">'+formatMoneyUsd(avgOrderSize)+'</td>'
+
+                                txt2 += '<td style="text-align: left;">'+'Rp '+parseInt(avgProductPriceRp).toLocaleString()+'</td>'
+                                txt2 += '<td style="text-align: left;">'+formatMoneyUsd(avgProductPrice)+'</td>'
+
+                                txt2 += `<td style="text-align: left;">${parseInt(monthlyTarget).toLocaleString()}</td>`
+                                txt2 += `<td style="text-align: left;">${vsMt.toFixed(2)}%</td>`
+                                txt2 += `<td style="text-align: left;">${parseInt(marketingSpending).toLocaleString()}</td>`
+                                txt2 += `<td style="text-align: left;">${roas.toFixed(2)}</td>`
+                                txt2 += '</tr>'
+                                maxads++
+
+                            });
+                            $("#data-currentmonth-management tbody").html(txt2)
+                            $("#table-currentmonth-management tbody").html(txt1)
+                            
+
+                            $('#total-gmv-rp').html('Rp '+ parseInt(totalGmvRp).toLocaleString())
+                            $('#total-gmv-usd').html(formatMoneyUsd(totalGmvUsd))
+                            $('#total-order').html(`${parseInt(totalOrder).toLocaleString()}`)
+                            $('#total-sold').html(`${parseInt(totalSold).toLocaleString()}`)
+
+                            $('#total-avg-order-rp').html('Rp '+ parseInt(totalGmvRp/totalOrder).toLocaleString())
+                            $('#total-avg-order').html(formatMoneyUsd(totalGmvUsd/totalOrder))
+                            $('#total-avg-price-rp').html('Rp '+ parseInt(totalGmvRp/totalSold).toLocaleString())
+                            $('#total-avg-price').html(formatMoneyUsd(totalGmvUsd/totalSold))
+
+                            $('#total-monthly-target').html(parseInt(totalMT).toLocaleString())
+                            $('#total-vsMonthly-target').html((totalGmvRp / totalMT).toFixed(2)+'%')
+                            $('#total-marketing-spending').html(parseInt(totalMS).toLocaleString())
+                            $('#total-roas').html((totalMS / totalGmvRp).toFixed(2))
+
+                            //data download
+                            $('#data-total-gmv-rp').html(totalGmvRp)
+                            $('#data-total-gmv-usd').html(totalGmvUsd)
+                            $('#data-total-order').html(totalOrder)
+                            $('#data-total-sold').html(totalSold)
+
+                            $('#data-total-avg-order').html(formatMoneyUsd(totalGmvUsd/totalOrder))
+                            $('#data-total-avg-price').html(formatMoneyUsd(totalGmvUsd/totalSold))
+
+                            $('#data-total-monthly-target').html(parseInt(totalMT).toLocaleString())
+                            $('#data-total-vsMonthly-target').html((totalGmvRp / totalMT).toFixed(2)+'%')
+                            $('#data-total-marketing-spending').html(parseInt(totalMS).toLocaleString())
+                            $('#data-total-roas').html((totalMS / totalGmvRp).toFixed(2))
+
+                        }
+                    })
+                }
+            })
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+        }
+    });
+
+    // month-to-date
+    $('#monthtodate').html(htmlMonthtodate)
+
+    // let mtdStart = moment().format('YYYY-MM')+'-01'
+    // let mtdEnd = moment().subtract(1, 'days').format('YYYY-MM-DD')
+
+    console.log(moment().daysInMonth())
+
+    $.ajax({
+        method: 'GET',
+        url: `https://apimp.egogohub.tech/apidashboard.php?s=report_current_yesterday`,
+        dataType: 'json',
+        success: function(result) {
+
+            //Request Monthly Target
+            $.ajax({
+                "url": "https://intranet.avconcept.com/api/erp-marketing/adv/selectMarketingTarget",
+                "method": "POST",
+                "timeout": 0,
+                "headers": {
+                    "Content-Type": "application/json",
+                },
+                "data": JSON.stringify({
+                    "startPeriod": mtdStart,
+                    "endPeriod": mtdEnd,
+                    "currency": "IDR"
+                }),
+                success: (resAT)=>{
+                    let dataAT = resAT.data.targetData.results
+
+                    $.ajax({
+                        "url": "https://intranet.avconcept.com/api/erp-marketing/adv/selectMarketingSpending",
+                        "method": "POST",
+                        "timeout": 0,
+                        "headers": {
+                            "Content-Type": "application/json",
+                        },
+                        "data": JSON.stringify({
+                            "region": "ID",
+                            "effDate": mtdStart,
+                            "endDate": mtdEnd,
+                            "currency": "IDR"
+                        }),
+                        success: (resMS)=>{
+                            let dataMS = resMS.data
+
+                            $("#table-monthtodate tbody").html("")
+                            $("#data-monthtodate tbody").html("")
+                
+                            var maxads = 1;
+                            var txt1 = ""
+                            var txt2 = ""
+                
+                            let totalGmvRpMonth = 0
+                            let totalGmvUsdMonth = 0
+                            let totalOrderMonth = 0
+                            let totalSoldMonth = 0
+
+                            let totalAnnualMTD = 0
+                            let totalMarketingSpendingMTD = 0
+                            
+                            $.each(result, function(i, item) {
+
+                                let htmlAT;
+                                for (let i = 0; i < dataAT.length; i++) {
+                                    if (item.fk_brand == dataAT[i].brandCode) {
+                                        htmlAT = dataAT[i].annualTarget
+                                    }
+                                }
+                                
+                                let htmlMS;
+                                for (let i = 0; i < dataMS.length; i++) {
+                                    if (item.fk_brand == dataMS[i].idBrandCde) {
+                                        htmlMS = dataMS[i].amount
+                                    }
+                                }
+
+                                // console.log(htmlMS);
+                                let AnnualTargetMTD;
+                                let vsAnnualTarget;
+                                if (htmlAT == undefined) {
+                                    AnnualTargetMTD = 0
+                                }else {
+                                    AnnualTargetMTD = htmlAT
+                                    vsAnnualTarget = item.GMV_Total_Rp / AnnualTargetMTD
+                                }
+
+                                let marketingSpendingMTD;
+                                let roasMTD;
+                                if (htmlMS == undefined) {
+                                    marketingSpendingMTD = 0
+                                } else {
+                                    marketingSpendingMTD = htmlMS
+                                    roasMTD = marketingSpendingMTD / item.GMV_Total_Rp
+                                }
+
+                                let avgOrderSize = item.GMV_Total_USD / item.Order_Count
+                                let avgOrderSizeRp = item.GMV_Total_Rp / item.Order_Count
+                                let avgProductPrice = item.GMV_Total_USD / item.Product_Sold
+                                let avgProductPriceRp = item.GMV_Total_Rp / item.Product_Sold
+                                let gmvUsd = parseFloat(item.GMV_Total_USD)
+                
+                                totalGmvRpMonth += Number(item.GMV_Total_Rp)
+                                totalGmvUsdMonth += Number(item.GMV_Total_USD)
+                                totalOrderMonth += Number(item.Order_Count)
+                                totalSoldMonth += Number(item.Product_Sold)
+
+                                totalAnnualMTD += Number(AnnualTargetMTD)
+                                totalMarketingSpendingMTD += Number(marketingSpendingMTD)
+                                
+                                txt1 += '<tr>'
+                                txt1 += '<td style="text-align: center;">'+maxads+'</td>'
+                                txt1 += '<td><b>'+item.brand+'</b></td>'
+                                txt1 += '<td style="text-align: left;">'+item.nama+'</td>'
+                                txt1 += '<td style="text-align: left;">Rp '+parseInt(item.GMV_Total_Rp).toLocaleString()+'</td>'
+                                txt1 += '<td>'+formatMoneyUsd(gmvUsd)+'</td>'
+                                txt1 += '<td style="text-align: center;">'+parseInt(item.Order_Count).toLocaleString()+'</td>'
+                                txt1 += '<td style="text-align: center;">'+parseInt(item.Product_Sold).toLocaleString()+'</td>'
+                                txt1 += '<td style="text-align: left;">'+'Rp '+parseInt(avgOrderSizeRp).toLocaleString()+'</td>'
+                                txt1 += '<td style="text-align: left;">'+formatMoneyUsd(avgOrderSize)+'</td>'
+                
+                                txt1 += '<td style="text-align: left;">'+'Rp '+parseInt(avgProductPriceRp).toLocaleString()+'</td>'
+                                txt1 += '<td style="text-align: left;">'+formatMoneyUsd(avgProductPrice)+'</td>'
+                                txt1 += `<td style="text-align: left;">${parseInt(AnnualTargetMTD).toLocaleString()}</td>`
+                                txt1 += `<td style="text-align: left;">${vsAnnualTarget == undefined ? 0 : vsAnnualTarget.toFixed(2)}%</td>`
+                                txt1 += `<td style="text-align: left;">${parseInt(marketingSpendingMTD).toLocaleString()}</td>`
+                                txt1 += `<td style="text-align: left;">${roasMTD == undefined ? 0 : roasMTD.toFixed(2)}</td>`
+                                txt1 += '</tr>'
+                
+                                //data
+                                txt2 += '<tr>'
+                                txt2 += '<td style="text-align: center;">'+maxads+'</td>'
+                                txt2 += '<td><b>'+item.brand+'</b></td>'
+                                txt2 += '<td style="text-align: left;">'+item.nama+'</td>'
+                                txt2 += '<td style="text-align: left;">'+parseInt(item.GMV_Total_Rp).toLocaleString()+'</td>'
+                                txt2 += '<td>'+formatMoneyUsd(gmvUsd)+'</td>'
+                                txt2 += '<td style="text-align: center;">'+item.Order_Count+'</td>'
+                                txt2 += '<td style="text-align: center;">'+item.Product_Sold+'</td>'
+                                txt2 += '<td style="text-align: left;">'+formatMoneyUsd(avgOrderSize)+'</td>'
+                
+                                txt2 += '<td style="text-align: left;">'+formatMoneyUsd(avgProductPrice)+'</td>'
+
+                                txt2 += `<td style="text-align: left;">${AnnualTargetMTD}</td>`
+                                txt2 += `<td style="text-align: left;">${vsAnnualTarget == undefined ? 0 : vsAnnualTarget.toFixed(2)}%</td>`
+                                txt2 += `<td style="text-align: left;">${marketingSpendingMTD}</td>`
+                                txt2 += `<td style="text-align: left;">${roasMTD == undefined ? 0 : roasMTD.toFixed(2)}</td>`
+
+                                txt2 += '</tr>'
+                
+                                maxads++
+                            });
+                            $("#data-monthtodate tbody").html(txt2)
+                            $("#table-monthtodate tbody").html(txt1)
+                            
+                
+                            $('#total-gmv-rp-month').html(`Rp ${parseInt(totalGmvRpMonth).toLocaleString()}`)
+                            $('#total-gmv-usd-month').html(formatMoneyUsd(totalGmvUsdMonth))
+                            $('#total-order-month').html(`${parseInt(totalOrderMonth).toLocaleString()}`)
+                            $('#total-sold-month').html(`${parseInt(totalSoldMonth).toLocaleString()}`)
+                
+                            $('#total-avg-order-month-rp').html('Rp '+ parseInt(totalGmvRpMonth/totalOrderMonth).toLocaleString())
+                            $('#total-avg-order-month').html(formatMoneyUsd(totalGmvUsdMonth/totalOrderMonth))
+                            $('#total-avg-price-month-rp').html('Rp '+ parseInt(totalGmvRpMonth/totalSoldMonth).toLocaleString())
+                            $('#total-avg-price-month').html(formatMoneyUsd(totalGmvUsdMonth/totalSoldMonth))
+
+                            $('#total-mtdAnnual-target').html(parseInt(totalAnnualMTD).toLocaleString())
+                            $('#total-mtdVsAnnual-target').html((totalGmvRpMonth / totalAnnualMTD).toFixed(2)+'%')
+
+                            $('#total-mtdMarketing-spending').html(parseInt(totalMarketingSpendingMTD).toLocaleString())
+                            $('#total-mtdRoas').html((totalMarketingSpendingMTD / totalGmvRpMonth).toFixed(2))
+                
+                            //data download
+                            $('#data-total-gmv-rp-month').html(totalGmvRpMonth)
+                            $('#data-total-gmv-usd-month').html(totalGmvUsdMonth)
+                            $('#data-total-order-month').html(totalOrderMonth)
+                            $('#data-total-sold-month').html(totalSoldMonth)
+                
+                            $('#data-total-avg-order-month').html(formatMoneyUsd(totalGmvUsdMonth/totalOrderMonth))
+                            $('#data-total-avg-price-month').html(formatMoneyUsd(totalGmvUsdMonth/totalSoldMonth))
+
+                            $('#data-total-mtdAnnual-target').html(totalAnnualMTD)
+                            $('#data-total-mtdVsAnnual-target').html((totalGmvRpMonth / totalAnnualMTD).toFixed(2)+'%')
+
+                            $('#data-total-mtdMarketing-spending').html(totalMarketingSpendingMTD)
+                            $('#data-total-mtdRoas').html((totalMarketingSpendingMTD / totalGmvRpMonth).toFixed(2))
+
+                        }
+                    })
+                }
+            })
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+        }
+    });
+    // // quarter
+    $('#quarter').html(htmlQuarter)
+
+    $.ajax({
+        method: 'GET',
+        url: `https://apimp.egogohub.tech/apidashboard.php?s=report_current_quarter`,
+        dataType: 'json',
+        success: function(result) {
+
+            $.ajax({
+                "url": "https://intranet.avconcept.com/api/erp-marketing/adv/selectMarketingTarget",
+                "method": "POST",
+                "timeout": 0,
+                "headers": {
+                    "Content-Type": "application/json",
+                },
+                "data": JSON.stringify({
+                    "startPeriod": stDateQuarter,
+                    "endPeriod": endDateQuarter,
+                    "currency": "IDR"
+                }),
+                success: (resATQuarter)=>{
+                    let dataResATQuarter = resATQuarter.data.targetData.results
+
+                    $.ajax({
+                        "url": "https://intranet.avconcept.com/api/erp-marketing/adv/selectMarketingSpending",
+                        "method": "POST",
+                        "timeout": 0,
+                        "headers": {
+                            "Content-Type": "application/json",
+                        },
+                        "data": JSON.stringify({
+                            "region": "ID",
+                            "effDate": stDateQuarter,
+                            "endDate": endDateQuarter,
+                            "currency": "IDR"
+                        }),
+                        success: (resMSQuarter)=>{
+                            let dataResMSQuarter = resMSQuarter.data
+
+                            $("#table-quarter tbody").html("")
+                            $("#data-quarter tbody").html("")
+
+                            var maxads = 1;
+                            var txt1 = ""
+                            var txt2 = ""
+
+                            let totalGmvRpQuarter = 0
+                            let totalGmvUsdQuarter = 0
+                            let totalOrderQuarter = 0
+                            let totalSoldQuarter = 0
+
+                            let totalAnnualQuarter = 0
+                            let totalMarketingSpendingQuarter = 0
+
+                            $.each(result, function(i, item) {
+
+                                let htmlATQ;
+                                for (let i = 0; i < dataResATQuarter.length; i++) {
+                                    if (item.fk_brand == dataResATQuarter[i].brandCode) {
+                                        htmlATQ = dataResATQuarter[i].annualTarget
+                                    }
+                                }
+                                
+                                let htmlMSQ;
+                                for (let i = 0; i < dataResMSQuarter.length; i++) {
+                                    if (item.fk_brand == dataResMSQuarter[i].idBrandCde) {
+                                        htmlMSQ = dataResMSQuarter[i].amount
+                                    }
+                                }
+
+                                let annualQuarter;
+                                let vsAnnualQuarter;
+                                if (htmlATQ == undefined) {
+                                    annualQuarter = 0
+                                } else {
+                                    annualQuarter = htmlATQ
+                                    vsAnnualQuarter = item.GMV_Total_Rp / annualQuarter
+                                }
+
+                                let marketingSpendingQuarter;
+                                let roasQuarter;
+                                if (htmlMSQ == undefined) {
+                                    marketingSpendingQuarter = 0
+                                } else {
+                                    marketingSpendingQuarter = htmlMSQ
+                                    roasQuarter = marketingSpendingQuarter / item.GMV_Total_Rp
+                                }
+
+                                let avgOrderSize = item.GMV_Total_USD / item.Order_Count
+                                let avgOrderSizeRp = item.GMV_Total_Rp / item.Order_Count
+                                let avgProductPrice = item.GMV_Total_USD / item.Product_Sold
+                                let avgProductPriceRp = item.GMV_Total_Rp / item.Product_Sold
+                                let gmvUsd = parseFloat(item.GMV_Total_USD)
+
+                                totalGmvRpQuarter += Number(item.GMV_Total_Rp)
+                                totalGmvUsdQuarter += Number(item.GMV_Total_USD)
+                                totalOrderQuarter += Number(item.Order_Count)
+                                totalSoldQuarter += Number(item.Product_Sold)
+
+                                totalAnnualQuarter += Number(annualQuarter)
+                                totalMarketingSpendingQuarter += Number(marketingSpendingQuarter)
+                                
+                                txt1 += '<tr>'
+                                txt1 += '<td style="text-align: center;">'+maxads+'</td>'
+                                txt1 += '<td><b>'+item.brand+'</b></td>'
+                                txt1 += '<td style="text-align: left;">'+item.nama+'</td>'
+                                txt1 += '<td style="text-align: left;">Rp '+parseInt(item.GMV_Total_Rp).toLocaleString()+'</td>'
+                                txt1 += '<td>'+formatMoneyUsd(gmvUsd)+'</td>'
+                                txt1 += '<td style="text-align: center;">'+parseInt(item.Order_Count).toLocaleString()+'</td>'
+                                txt1 += '<td style="text-align: center;">'+parseInt(item.Product_Sold).toLocaleString()+'</td>'
+                                txt1 += '<td style="text-align: left;">'+'Rp '+ parseInt(avgOrderSizeRp).toLocaleString()+'</td>'
+                                txt1 += '<td style="text-align: left;">'+formatMoneyUsd(avgOrderSize)+'</td>'
+
+                                txt1 += '<td style="text-align: left;">'+'Rp '+ parseInt(avgProductPriceRp).toLocaleString()+'</td>'
+                                txt1 += '<td style="text-align: left;">'+formatMoneyUsd(avgProductPrice)+'</td>'
+
+                                txt1 += `<td style="text-align: left;">${parseInt(annualQuarter).toLocaleString()}</td>`
+                                txt1 += `<td style="text-align: left;">${vsAnnualQuarter == undefined ? 0 : vsAnnualQuarter.toFixed(2)}%</td>`
+                                txt1 += `<td style="text-align: left;">${parseInt(marketingSpendingQuarter).toLocaleString()}</td>`
+                                txt1 += `<td style="text-align: left;">${roasQuarter == undefined ? 0 : roasQuarter.toFixed(2)}</td>`
+
+                                txt1 += '</tr>'
+
+                                //data
+                                txt2 += '<tr>'
+                                txt2 += '<td style="text-align: center;">'+maxads+'</td>'
+                                txt2 += '<td><b>'+item.brand+'</b></td>'
+                                txt2 += '<td style="text-align: left;">'+item.nama+'</td>'
+                                txt2 += '<td style="text-align: left;">'+parseInt(item.GMV_Total_Rp).toLocaleString()+'</td>'
+                                txt2 += '<td>'+formatMoneyUsd(gmvUsd)+'</td>'
+                                txt2 += '<td style="text-align: center;">'+item.Order_Count+'</td>'
+                                txt2 += '<td style="text-align: center;">'+item.Product_Sold+'</td>'
+                                txt2 += '<td style="text-align: left;">'+formatMoneyUsd(avgOrderSize)+'</td>'
+
+                                txt2 += '<td style="text-align: left;">'+formatMoneyUsd(avgProductPrice)+'</td>'
+
+                                txt2 += `<td style="text-align: left;">${annualQuarter}</td>`
+                                txt2 += `<td style="text-align: left;">${vsAnnualQuarter == undefined ? 0 : vsAnnualQuarter.toFixed(2)}%</td>`
+                                txt2 += `<td style="text-align: left;">${marketingSpendingQuarter}</td>`
+                                txt2 += `<td style="text-align: left;">${roasQuarter == undefined ? 0 : roasQuarter.toFixed(2)}</td>`
+
+                                txt2 += '</tr>'
+                                maxads++
+                            });
+                            $("#data-quarter tbody").html(txt2)
+                            $("#table-quarter tbody").html(txt1)
+
+
+                            $('#total-gmv-rp-quarter').html('Rp '+ parseInt(totalGmvRpQuarter).toLocaleString())
+                            $('#total-gmv-usd-quarter').html(formatMoneyUsd(totalGmvUsdQuarter))
+                            $('#total-order-quarter').html(`${parseInt(totalOrderQuarter).toLocaleString()}`)
+                            $('#total-sold-quarter').html(`${parseInt(totalSoldQuarter).toLocaleString()}`)
+
+                            $('#total-avg-order-quarter-rp').html('Rp '+ parseInt(totalGmvRpQuarter/totalOrderQuarter).toLocaleString())
+                            $('#total-avg-order-quarter').html(formatMoneyUsd(totalGmvUsdQuarter/totalOrderQuarter))
+                            $('#total-avg-price-quarter-rp').html('Rp '+ parseInt(totalGmvRpQuarter/totalSoldQuarter).toLocaleString())
+                            $('#total-avg-price-quarter').html(formatMoneyUsd(totalGmvUsdQuarter/totalSoldQuarter))
+
+
+                            $('#total-annualTarget-quarter').html(parseInt(totalAnnualQuarter).toLocaleString())
+                            $('#total-vsAnnualTarget-quarter').html((totalGmvRpQuarter / totalAnnualQuarter).toFixed(2)+'%')
+
+                            $('#total-marketingSpending-quarter').html(parseInt(totalMarketingSpendingQuarter).toLocaleString())
+                            $('#total-roas-quarter').html((totalMarketingSpendingQuarter / totalGmvRpQuarter).toFixed(2))
+
+                            //data download
+                            $('#data-total-gmv-rp-quarter').html(totalGmvRpQuarter)
+                            $('#data-total-gmv-usd-quarter').html(totalGmvUsdQuarter)
+                            $('#data-total-order-quarter').html(totalOrderQuarter)
+                            $('#data-total-sold-quarter').html(totalSoldQuarter)
+
+                            $('#data-total-avg-order-quarter').html(formatMoneyUsd(totalGmvUsdQuarter/totalOrderQuarter))
+                            $('#data-total-avg-price-quarter').html(formatMoneyUsd(totalGmvUsdQuarter/totalSoldQuarter))
+
+                            $('#data-total-annualTarget-quarter').html(totalAnnualQuarter)
+                            $('#data-total-vsAnnualTarget-quarter').html((totalGmvRpQuarter / totalAnnualQuarter).toFixed(2)+'%')
+
+                            $('#data-total-marketingSpending-quarter').html(totalMarketingSpendingQuarter)
+                            $('#data-total-roas-quarter').html((totalMarketingSpendingQuarter / totalGmvRpQuarter).toFixed(2))
+
+                        }
+                    })
+                }
+            })
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+        }
+    });
+})
+
+
+    </script>
+</body>
+</html>

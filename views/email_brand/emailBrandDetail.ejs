@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><%= title %></title>
+<link rel="icon" type="image/png" href="/img/favicon.ico"/>
+<%- include('../partial/partial_css.ejs') %>
+<style>
+    .select2-container--default .select2-selection--single {
+        height: 34px !important;
+    }
+
+    .table>caption+thead>tr:first-child>td, .table>caption+thead>tr:first-child>th, .table>colgroup+thead>tr:first-child>td, .table>colgroup+thead>tr:first-child>th, .table>thead:first-child>tr:first-child>td, .table>thead:first-child>tr:first-child>th {
+        background-color: #f4f6f9 !important;
+    }
+
+    .select2-container {
+        width: 100%;
+    }
+    #filter-product {
+        box-shadow: 2px 1px #323e47;
+        width: 200px;
+    }
+
+    .buttons-excel{
+        background-color: #323e47 !important;
+        color: white;
+        position: absolute;
+        left: 95px;
+        top: 65px;
+    }
+    .buttons-excel:hover{
+        background-color: #51595f !important;
+        color: white;
+    }
+    
+    
+    .table-striped {
+        border: 1px solid rgb(235, 235, 235);
+        padding: 20px 20px 20px 20px !important;
+    }
+    .loader-tab{
+        background-color: white;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 80%;
+        border-radius: 20px;
+    }
+    .dataTables_filter {
+        margin-right: 15em;
+    }
+    .select-delete {
+        position: absolute;
+        top: 5em;
+    }
+    .table>caption+thead>tr:first-child>td, .table>caption+thead>tr:first-child>th, .table>colgroup+thead>tr:first-child>td, .table>colgroup+thead>tr:first-child>th, .table>thead:first-child>tr:first-child>td, .table>thead:first-child>tr:first-child>th{
+
+        background-color: #51595f !important; 
+        color: white;
+    }
+    .page-item.active .page-link{
+        background-color: #51595f !important; 
+        border-color: #51595f !important;
+        color: white;
+    }
+    /* .sorting  {
+    } */
+    @media only screen and (max-width: 756px) {
+        .buttons-excel{
+            /* background-color: #3ad074 !important; */
+            color: white;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+        }
+        .select-delete {
+            position: relative;
+            top: 8em;
+        }
+        .form-check-label {
+            margin-bottom: 0;
+            margin-left: 14px !important;
+        }
+        
+    }
+    @media only screen and (max-width: 479px) {
+        label:not(.form-check-label):not(.custom-file-label) {
+            display: table-caption !important;
+        }
+        .select-delete {
+            position: relative;
+            top: 8em;
+            left: 80px !important;
+        }
+    }
+</style>
+</head>
+<body id="body">
+    <%- include('../partial/partial_header.ejs') %>
+    <%- include('../partial/partial_footer.ejs') %>
+    <!-- Body -->
+    <div class="wrapper">
+        <div class="content-wrapper">
+            <!-- Content Header -->
+            <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Email Brand | <b class="keteragan">Detail</b></h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Email Brand</a></li>
+                    <li class="breadcrumb-item active keteragan">Detail</li>
+                    </ol>
+                </div>
+                </div>
+            </div>
+            </div>
+            <!-- End Content Header -->
+            <!-- Content -->
+            <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                <section class="col-lg-12 connectedSortable ui-sortable">
+                    <div class="card" style="position: relative; left: 0px; top: 0px;">
+                    <div class="card-header ui-sortable-handle" style="cursor: move;">
+                        <h3 class="card-title"> Email Brand</h3>
+                    </div>
+                    <div style="display: none;" class="alert alert-danger auto-close mx-4 text-center" role="alert">
+                        <i style="font-size: 15px;" class="fas fa-exclamation-circle">Please select the item to delete!</i>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div id="dataDetail">
+                                <% data.forEach((rows, index) => {  %>
+                                    <!-- Content -->
+                                    <section class="content">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                            <section class="col-lg-12 connectedSortable ui-sortable">
+                                                <div class="card" style="position: relative; left: 0px; top: 0px;">
+                                                <div class="card-header ui-sortable-handle" style="cursor: move;">
+                                                    <h3 class="card-title"> Detail Data</h3>
+                                                </div>
+                                                <div class="card-body row">
+                                                    <!-- Row -->
+                                                    <div class="col-md-6">
+                                                    <div class="form-group row form-detail">
+                                                        <label for="staticEmail" class="col-sm-3 col-form-label">Name</label>
+                                                        <div class="col-sm-9 isi-content">
+                                                            <%= rows.name_pm  %>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                    <!-- Row -->
+                                                    <div class="col-md-6">
+                                                    <div class="form-group row form-detail">
+                                                        <label for="staticEmail" class="col-sm-3 col-form-label">User</label>
+                                                        <div class="col-sm-9 isi-content">
+    
+                                                            <% if(dataUser == undefined || dataUser == null ){ %>
+                                                            <% } else{ %>
+                                                                <% dataUser.forEach((rowsUser, index) => {  %>
+                                                                    <% if (rows.user_id == rowsUser.rowid) { %>
+                                                                        <span id="userValue" data-email=" <%= rowsUser.email %> "><%=rowsUser.full_name%></span>
+                                                                        
+                                                                    <% } %>
+                                                                        
+                                                                <%})%>
+                                                            <% } %>
+                                                        
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                    <!-- Row -->
+                                                    <div class="col-md-6">
+                                                    <div class="form-group row form-detail">
+                                                        <label for="staticEmail" class="col-sm-3 col-form-label">Brand</label>
+                                                        <div class="col-sm-9 isi-content">
+    
+                                                            <% if(dataBrand == undefined || dataBrand == null ){ %>
+                                                            <% } else{ %>
+                                                                <% dataBrand.forEach((rowsBrand, index) => {  %>
+                                                                    <% if (rowsBrand.rowid.toString() === rows.brand_id.toString()) { %>
+                                                                    <%=rowsBrand.label%>
+                                                                    <% } %>
+                                                                    
+                                                                <%})%>
+                                                            <% } %>
+                                                        
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                    <!-- Row -->
+                                                    <div class="col-md-6">
+                                                    <div class="form-group row form-detail">
+                                                        <label for="staticEmail" class="col-sm-3 col-form-label">Email</label>
+                                                        <div class="col-sm-9 isi-content">
+                                                            <span id="emailHtml"></span>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                    <!-- Row -->
+                                                    <div class="col-md-6">
+                                                    <div class="form-group row form-detail">
+                                                        <label for="staticEmail" class="col-sm-3 col-form-label">Status</label>
+                                                        <div class="col-sm-9 isi-content">
+    
+                                                            <% if (rows.status == 1) { %>
+                                                                Active
+                                                            <% } else {%>
+                                                                Non-Active
+                                                            <% } %> 
+                                                        
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                    <!-- Row -->
+                                                </div>
+                                                <div class="card-footer ui-sortable-handle">
+                                                    <button class="btn btn-default back-btn"><i class="fa fa-arrow-left"></i> Back to list</button>
+                                                    <button class="btn btn-primary" id="btnEditData"><i class="far fa-edit"></i> Edit Data </button>
+                                                </div>
+                                                </div>
+                                            </section>
+                                            </div>
+                                        </div>
+                                    </section>
+                                    <!-- Content -->
+                                <%})%>
+                            </div>
+
+                            <div id="dataUpdate" style="display: none;" >
+                                <form action="" id="FormUpdateEmailBrand">
+                                    <% data.forEach((rows, index) => {  %>
+                                    <section class="content">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <input name="rowid" type="hidden" value="<%= rows._id %> ">
+                                                <div class="col-md-6">
+                                                    <div class="col-sm-3">
+                                                        <label for="" class="form-label">Name</label>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control" id="name-1" name="name" value="<%= rows.name_pm %>">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="col-sm-3">
+                                                        <label for="" class="form-label">User</label>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <select name="user" class="form-control select2 user_emailBrand"  id="user-1">
+                                                            <% if(dataUser == undefined || dataUser == null ){ %>
+                                                                <option class="optiongrey" value="">&nbsp;</option>
+                                                            <% } else{ %>
+                                                                <% dataUser.forEach((rowsUser, index) => {  %>
+                                                                    <% if (rows.user_id == rowsUser.rowid) { %>
+                                                                        <option value="<%=rowsUser.rowid%>" data-email="<%=rowsUser.email%>" selected ><%=rowsUser.full_name%></option>
+                                                                        
+                                                                    <% } else {%>
+                                                                        <option value="<%=rowsUser.rowid%>" data-email="<%=rowsUser.email%>" ><%=rowsUser.full_name%></option>
+                                                                    <% } %> 
+                                                                <%})%>
+                                                            <% } %>
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 my-3">
+                                                <div class="col-md-6">
+                                                    <div class="col-sm-3">
+                                                        <label for="" class="form-label">Brand</label>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <select name="brand" class="form-control select2 brand" id="brand-1">
+    
+                                                            <% if(dataBrand == undefined || dataBrand == null ){ %>
+                                                                <option class="optiongrey" value="">&nbsp;</option>
+                                                            <% } else{ %>
+                                                                <% dataBrand.forEach((rowsBrand, index) => {  %>
+                                                                    <% if (rowsBrand.rowid.toString() == rows.brand_id.toString()) { %>
+                                                                    <option value="<%=rowsBrand.rowid%>" selected><%=rowsBrand.label%></option>
+                                                                    <% } else {%>
+                                                                    <option value="<%=rowsBrand.rowid%>" ><%=rowsBrand.label%></option>
+                                                                    <% } %> 
+                                                                <%})%>
+                                                            <% } %>
+    
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="col-sm-3">
+                                                        <label for="" class="form-label">Email</label>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control email" name="email" id="email-1" value="" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="col-md-6">
+                                                    <div class="col-sm-3">
+                                                        <label for="" class="form-label">Status</label>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <select name="status" class="form-control select2 status" id="status-1">
+    
+                                                            <% if (rows.status == 1) { %>
+                                                                <option value="1" selected>Active</option>
+                                                                <option value="0">Non-Active</option>
+                                                            <% } else {%>
+                                                                <option value="0" selected>Non-Active</option>
+                                                                <option value="1">Active</option>
+                                                            <% } %> 
+    
+                                                        </select>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer ui-sortable-handle mt-3">
+                                            <button class="btn btn-secondary " id="cancelEdit"><i class="fa fa-times"></i> Cancel</button>
+                                            <button id="updateFormEmailBrand" class="btn btn-primary" type="button"><i class="fa fa-save"></i> Save </button>
+                                        </div>
+                                    </section>
+                                    <%})%>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </section>
+                </div>
+            </div>
+            </section>
+            <!-- Content -->
+        </div>
+    </div>
+
+    <!-- End Body -->
+    <%- include('../partial/partial_js.ejs') %>
+    <script type="text/javascript" src="//cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+    <script>
+
+        $(document).ready(function(){
+            $('#emailHtml').html($('#userValue').attr('data-email'))
+
+            let inputEmail = $('#email-1')
+            var optionSelected = $('#user-1').find('option:selected').attr('data-email');
+            inputEmail.val(optionSelected);
+        })
+
+        $( "#btnEditData" ).click(function(event) {
+            event.preventDefault();
+            $('#dataDetail').hide();
+            $('#dataUpdate').show();
+            $('.keteragan').html('Edit')
+        });
+
+        $("#cancelEdit").click(function(event){
+            event.preventDefault();
+            $('#dataDetail').show();
+            $('#dataUpdate').hide();
+            $('.keteragan').html('Detail')
+        });
+
+        $(document).ready(function() {
+            $('.select2').select2({
+                width: '100%'
+            });
+        });
+
+        $('.user_emailBrand').change(function(){
+            let inputEmail = $('#email-1')
+            var optionSelected = $(this).find('option:selected').attr('data-email');
+            inputEmail.val(optionSelected);
+            console.log(optionSelected);
+        });
+        
+        
+
+        $('#updateFormEmailBrand').on("click",function(){
+
+            let name =  $('#name-1').val()
+            let user =  $('#user-1').val()
+            let brand =  $('#brand-1').val()
+            let email =  $('#email-1').val()
+            let status =  $('#status-1').val()
+
+            if (name == '') {
+                swal("","Complete the form !","error")
+            } else {
+                if (user == null || user == '') {
+                    swal("","Complete the form !","error")
+                } else {
+                    if (brand == null || brand == '') {
+                        swal("","Complete the form !","error")
+                    } else {
+                        if (email == null || email == '') {
+                            swal("","Complete the form !","error")
+                        }else {
+                            if (status == null || status == '') {
+                                swal("","Complete the form !","error")
+                            } else {
+
+                                swal({
+                                    title: "",
+                                    text: "Are you sure to update ?",
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#337ab7",
+                                    confirmButtonText: "Update",
+                                    cancelButtonText: "Cancel",
+                                    closeOnConfirm: true,
+                                    closeOnCancel: true
+                                },
+                                    function (isConfirm) {
+                                        if (isConfirm) {
+                                            $.ajax({
+                                                'url':'/email-brand/update',
+                                                'type':'POST',
+                                                'data':$('#FormUpdateEmailBrand').serialize(),
+                                                'success':function(result){
+                                                    // console.log(result);
+                                                    if(result.status == 200){
+                                                        swal("Updated !","","success")
+                                                        setTimeout(function(){
+                                                            window.location.href='/email-brand/email-brand'
+                                                        },2000)
+                                                    } else {
+                                                        swal("Failed","","error")
+                                                    }
+                                                }
+                                            })
+                                        }
+                                    });
+                                    return false;
+                            }
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="description" content="Dekkson Loyalty Program">
+  
+  <!-- <meta name="author" content="Themefisher.com"> -->
+
+  <title><%= title %></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <%- include('./partial/partial_css.ejs') %>
+</head>
+<body id="body">
+
+<%- include('./partial/partial_header.ejs') %>
+
+<!-- Welcome Slider -->
+<section class="hero-area-carousel">
+  <div class="container-fluid p-0">
+    <div class="row m-0">
+      <div class="col-lg-12 p-0">
+        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+          <ol class="carousel-indicators">
+            <li data-target="#carouselExampleSlidesOnly" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleSlidesOnly" data-slide-to="1"></li>
+            <li data-target="#carouselExampleSlidesOnly" data-slide-to="2"></li>
+            <li data-target="#carouselExampleSlidesOnly" data-slide-to="3"></li>
+            <li data-target="#carouselExampleSlidesOnly" data-slide-to="4"></li>
+          </ol>
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img class="d-block w-100 main-slider" src="/images/slider/gambar1.png" height="400px" alt="First slide">
+              <!-- height asli untuk banner hero ini adalah 400px + 150px dari padding jadinya 550px -->
+            </div>
+            <div class="carousel-item">
+              <img class="d-block w-100 main-slider" src="/images/slider/gambar2.png" height="400px" alt="Second slide">
+              <!-- height asli untuk banner hero ini adalah 400px + 150px dari padding jadinya 550px> -->
+            </div>
+            <div class="carousel-item">
+              <img class="d-block w-100 main-slider" src="/images/slider/gambar3.png" height="400px" alt="Third slide">
+              <!-- height asli untuk banner hero ini adalah 400px + 150px dari padding jadinya 550px -->
+            </div>
+            <div class="carousel-item">
+              <img class="d-block w-100 main-slider" src="/images/slider/gambar4.png" height="400px" alt="Four slide">
+              <!-- height asli untuk banner hero ini adalah 400px + 150px dari padding jadinya 550px -->
+            </div>
+          </div>
+          <a class="carousel-control-prev" href="#carouselExampleSlidesOnly" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselExampleSlidesOnly" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Start About Section -->
+<section class="section bg-blue" id="about-dekkson">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-6 align-self-center mb-4 mb-md-0 section-welcome">
+        <div class="align-self-center">
+          <h2 style="margin-bottom: 50px;">Selamat Datang di <span class="title-about-section">Dekkson Loyalty Program</span></h2>
+          <p class="txt-white text-welcome-section">Hanya dengan mengirimkan foto struk belanja, kamu bisa mendapatkan point dan menukarnya dengan puluhan rewards sesuka mu!</p>
+          <p class="txt-white text-welcome-section">Tunggu apa lagi ? Ayo segera daftar !</p>
+          <p class="txt-white" style="margin-top:40px;">Syarat dan ketentuan ? <a href="#">Cek disini</a></p>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 ">
+        <form class="text-left clearfix bg-white bg-login form-login" action="#">
+          <div class="form-group title-login-box">
+            <h4 class="title-loginbox">Login Disini !</h4>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Email / No Telepon</label>
+            <div class="col-sm-8">
+              <input type="email" class="form-control" placeholder="Email / No Telepon anda" id="email">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Password</label>
+            <div class="col-sm-8">
+              <input type="password" class="form-control" placeholder="Password anda" id="password">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-12">
+              <button type="button" class="btn btn-main float-right" id="login_btn">Login</button>
+            </div>
+          </div>
+          <small class="form-text text-muted mt-4">Belum Terdaftar ? <a href="/registration">Daftar</a> | <a href="/forgot-password">Lupa password</a></small>
+        </form>
+        <div id="myDiv" class="bitcoin-graph" style="display: none;">
+          <p>Bitcoin graphs</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Start Testimonial -->
+<section class="testimonial section bg-white" id="testimonial">
+  <div class="container">
+    <div class="row">       
+      <div class="col-lg-12">
+        <h5 class="title-section-carousel">Deals of the month</h5>
+        <!-- testimonial wrapper -->
+        <div class="testimonial-slider">
+          <!-- testimonial single -->
+          <% if(undefined !== slider_promotion && slider_promotion.length>0) { %>
+          <% slider_promotion.forEach((rows, index) => { 
+          if(rows.status == 1){ %>
+          <div class="item">
+            <div class="block">
+              <img src="<%=rows.image%>" title="<%=rows.title%>" width="100%" height="100%">
+            </div>
+          </div>
+          <% }}) %>
+          <% } %>
+          
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<!-- Start Testimonial -->
+<section class="testimonial section" id="testimonial">
+  <div class="container">
+    <div class="row">       
+      <div class="col-lg-12">
+        <h5 class="title-section-carousel txt-white">Rewards</h5>
+        <!-- testimonial wrapper -->
+        <div class="testimonial-slider">
+          <!-- testimonial single -->
+          <% if(undefined !== slider_rewards && slider_rewards.length>0) { %>
+          <% slider_rewards.forEach((rows, index) => { 
+          if(rows.status == 1){%>
+          <div class="item">
+            <div class="block">
+              <img src="<%=rows.rewards_img%>" title="<%=rows.title%>" width="100%" height="100%">
+            </div>
+          </div>
+          <% }}) %>
+          <% } %>
+          
+        </div>
+      </div>     
+    </div>
+  </div>
+</section>
+
+<!-- Start Testimonial -->
+<section class="testimonial section bg-white" id="testimonial">
+  <div class="container">
+    <div class="row">       
+      <div class="col-lg-12">
+        <h5 class="title-section-carousel">Store Location</h5>
+        <!-- testimonial wrapper -->
+        <div class="maps-slider">
+          <!-- testimonial single -->
+          <% if(undefined !== slider_location && slider_location.length>0) { %>
+          <% slider_location.forEach((rows, index) => { 
+            if(rows.status == 1){%>
+            <div class="item">
+              <div class="block">
+                <a href="<%=rows.gmaps_url%>" target="_blank"><img src="<%=rows.location_img%>" title="Click to visit <%=rows.location%>" width="100%" height="100%"></a>
+                <p class="label-content-dashboard"><%=rows.location%></p>
+              </div>
+            </div>
+          <% }}) %>
+          <% } %>
+        </div>
+      </div>     
+    </div>
+  </div>
+</section>
+
+<%- include('./partial/partial_footer.ejs') %>
+
+    <!-- Essential Scripts -->
+    
+    <!-- Main jQuery -->
+    <%- include('./partial/partial_js.ejs') %>
+
+    <script type="text/javascript">
+      $("#login_btn").click(function(){
+
+        var email = $("#email").val();
+        var password = $("#password").val();
+
+        if (email == '') {
+          swal("Login gagal!", "Anda belum mengisi email akun. \nSilahkan cek kembali", "error");
+        }else if (password == '') {
+          swal("Login gagal!", "Anda belum mengisi passsword akun. \nSilahkan cek kembali", "error");
+        }else{
+
+          if (isNaN(email) == true) { //untuk login dg email
+
+            $.ajax({
+             'url': '/login',
+             'type': 'POST',
+             'data': {
+              'email'  : email,
+              'password'  : password
+            },
+            'success': function (data) {
+              if (data.code == 200) {
+                swal("Login Berhasil!", data.message, "success");
+                setTimeout(function () {
+                  window.location.href = data.url
+                }, 2000)
+              }else if (data.code == 401) {
+                swal("Login gagal!", data.message, "error");
+              }
+            }
+            });
+          }else{ //untuk login dg no telepon
+            if (email.substring(0,1) == 0) {
+              swal("Login gagal!", "Format no telepon salah. Harap menggunakan +62 untuk menggantikan 0 pada awal no telepon", "error");
+            }else{
+              $.ajax({
+               'url': '/login',
+               'type': 'POST',
+               'data': {
+                'email'  : email,
+                'password'  : password
+              },
+              'success': function (data) {
+                if (data.code == 200) {
+                  swal("Login Berhasil!", data.message, "success");
+                  setTimeout(function () {
+                    window.location.href = data.url
+                  }, 2000)
+                }else if (data.code == 401) {
+                  swal("Login gagal!", data.message, "error");
+                }
+              }
+              });
+            }
+          }
+        }
+      });
+      localStorage.setItem("li_id", '');
+      localStorage.setItem("li_url", '');
+    </script>
+
+</body>
+</html>

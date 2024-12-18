@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login Apps</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="/css/sweetalert.min.css">
+  <link rel="stylesheet" href="/css/adminlte.min.css">
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+  <!-- /.login-logo -->
+  <div class="card card-outline card-primary">
+    <div class="card-header text-center">
+      <span class="h2"><b>Sistem Pengelolaan Kendaraan</b></span>
+      <br><br>
+      <span>Badan Pengelolaan Aset Daerah DKI Jakarta</p>
+    </div>
+    <div class="card-body">
+        <p class="login-box-msg">Sign in to start your session</p>
+        
+        <form class="mb-4">
+          <div class="input-group mb-3">
+            <input type="email" class="form-control email" placeholder="Email">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-envelope"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="password" class="form-control password" placeholder="Password">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <!-- /.col -->
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary btn-block login">Sign In</button>
+            </div>
+            <!-- /.col -->
+          </div>
+        </form>
+        <!-- /.social-auth-links -->
+        <p class="mb-0">
+          <a href="/register" class="text-center">Register Account</a>
+        </p>
+    </div>
+    <!-- /.card-body -->
+        
+  </div>
+  <!-- /.card -->
+</div>
+<!-- /.login-box -->
+
+<!-- jQuery -->
+<script src="/plugins/jquery/jquery.min.js"></script>
+<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/js/adminlte.min.js"></script>
+<script src="/js/sweetalert.min.js"></script>
+
+<script>
+    $(".login").on("click",function(e){
+        e.preventDefault();
+        let email = $(".email").val();
+        let password = $(".password").val();
+
+        $.ajax({
+            url : '/login/verify',
+            method : 'POST',
+            data : {
+                email : email,
+                password : password
+            },
+            success : (result)=>{
+                if(result.code == 200){
+                    swal("Login Success", "", "success");
+                    setTimeout(function(){
+                        window.location.href='/home'
+                    },2000)
+                }
+            }
+        })
+
+    })
+</script>
+</body>
+</html>

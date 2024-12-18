@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><%= title %></title>
+<link rel="icon" type="image/png" href="/img/favicon.ico"/>
+<%- include('../partial/partial_css.ejs') %>
+<style>
+
+    .select2-container--default .select2-selection--single {
+        height: 34px !important;
+    }
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        text-align: center !important;
+    }
+
+    .table>caption+thead>tr:first-child>td, .table>caption+thead>tr:first-child>th, .table>colgroup+thead>tr:first-child>td, .table>colgroup+thead>tr:first-child>th, .table>thead:first-child>tr:first-child>td, .table>thead:first-child>tr:first-child>th {
+        background-color: #f4f6f9 !important;
+    }
+
+    .select2-container {
+        width: 100%;
+    }
+    #filter-product {
+        box-shadow: 2px 1px #323e47;
+        width: 200px;
+    }
+
+    .buttons-excel{
+        background-color: #323e47 !important;
+        color: white;
+        position: absolute;
+        left: 95px;
+        top: 65px;
+    }
+    .buttons-excel:hover{
+        background-color: #51595f !important;
+        color: white;
+    }
+    
+    
+    .table-striped {
+        border: 1px solid rgb(235, 235, 235);
+        padding: 20px 20px 20px 20px !important;
+    }
+    .loader-tab{
+        background-color: white;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 80%;
+        border-radius: 20px;
+    }
+    .dataTables_filter {
+        margin-right: 15em;
+    }
+    .select-delete {
+        position: absolute;
+        top: 5em;
+    }
+    .table>caption+thead>tr:first-child>td, .table>caption+thead>tr:first-child>th, .table>colgroup+thead>tr:first-child>td, .table>colgroup+thead>tr:first-child>th, .table>thead:first-child>tr:first-child>td, .table>thead:first-child>tr:first-child>th{
+
+        background-color: #51595f !important; 
+        color: white;
+    }
+    .page-item.active .page-link{
+        background-color: #51595f !important; 
+        border-color: #51595f !important;
+        color: white;
+    }
+    /* .sorting  {
+    } */
+    @media only screen and (max-width: 756px) {
+        .buttons-excel{
+            /* background-color: #3ad074 !important; */
+            color: white;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+        }
+        .select-delete {
+            position: relative;
+            top: 8em;
+        }
+        .form-check-label {
+            margin-bottom: 0;
+            margin-left: 14px !important;
+        }
+        
+    }
+    @media only screen and (max-width: 479px) {
+        label:not(.form-check-label):not(.custom-file-label) {
+            display: table-caption !important;
+        }
+        .select-delete {
+            position: relative;
+            top: 8em;
+            left: 80px !important;
+        }
+    }
+</style>
+</head>
+<body id="body">
+    <%- include('../partial/partial_header.ejs') %>
+    <%- include('../partial/partial_footer.ejs') %>
+    <!-- Body -->
+    <div class="wrapper">
+        <div class="content-wrapper">
+            <!-- Content Header -->
+            <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Data Kendaraan | <b class="keteragan">List</b> </h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Data Kendaraan</a></li>
+                    <li class="breadcrumb-item active keteragan">List</li>
+                    </ol>
+                </div>
+                </div>
+            </div>
+            </div>
+            <!-- End Content Header -->
+            <!-- Content -->
+            <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                <section class="col-lg-12 connectedSortable ui-sortable">
+                    <div class="card" style="position: relative; left: 0px; top: 0px;">
+                    
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div id="listEmailBrand">
+                                <button class="btn btn-primary my-3" id="btnCreateNew"><i class="fas fa-pen-square"></i> Create New Data</button>
+                                <div style="display: none;" class="alert alert-danger auto-close mx-4 text-center" role="alert">
+                                    <i style="font-size: 15px;" class="fas fa-exclamation-circle">Please select the item to delete!</i>
+                                </div>
+                                <div class="table-responsive">
+                                    <div class="row mx-auto" id="div-delete">
+                                        <div class="col-md-12">
+                                            
+                                            <div class="row justify-content-end">
+                                                <div class="form-inline select-delete">
+                                                    <div class="form-check mr-sm-2">
+                                                        <input style="width: 20px; height: 20px;" class="form-check-input" type="checkbox" id="checkall">
+                                                        <label class="form-check-label" for="checkall">
+                                                        Select all
+                                                        </label>
+                                                    </div>
+                                                    <button type="button" class="btn btn-outline-danger btn-small" id="delsel"><i class="fa fa-trash"></i> Delete</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <table id="list-email-brand" class="display dataTable table table-striped no-margin" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center" rowspan="1" colspan="1" >No.</th>
+                                                <th class="text-left" rowspan="1" colspan="1" >No Polisi</th>
+                                                <th class="text-left" rowspan="1" colspan="1" >Jenis Roda</th>
+                                                <th class="text-left" rowspan="1" colspan="1" >Merek</th>
+                                                <th class="text-left" rowspan="1" colspan="1" >Tipe Kendaraan</th>
+                                                <th class="text-left" rowspan="1" colspan="1" >Jenis Kendaraan</th>
+                                                <th class="text-left" rowspan="1" colspan="1" >Tahun Kendaraan</th>
+                                                <th class="text-left" rowspan="1" colspan="1" >User</th>
+                                                <th class="text-center text-muted">ACTION</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                    </div>
+                </section>
+                </div>
+            </div>
+            </section>
+            <!-- Content -->
+        </div>
+    </div>
+
+    <!-- End Body -->
+    <%- include('../partial/partial_js.ejs') %>
+    <script type="text/javascript" src="//cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+    <script>
+
+    </script>
+</body>
+</html>

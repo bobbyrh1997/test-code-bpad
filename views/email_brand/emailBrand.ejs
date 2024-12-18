@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><%= title %></title>
+<link rel="icon" type="image/png" href="/img/favicon.ico"/>
+<%- include('../partial/partial_css.ejs') %>
+<style>
+
+    .select2-container--default .select2-selection--single {
+        height: 34px !important;
+    }
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        text-align: center !important;
+    }
+
+    .table>caption+thead>tr:first-child>td, .table>caption+thead>tr:first-child>th, .table>colgroup+thead>tr:first-child>td, .table>colgroup+thead>tr:first-child>th, .table>thead:first-child>tr:first-child>td, .table>thead:first-child>tr:first-child>th {
+        background-color: #f4f6f9 !important;
+    }
+
+    .select2-container {
+        width: 100%;
+    }
+    #filter-product {
+        box-shadow: 2px 1px #323e47;
+        width: 200px;
+    }
+
+    .buttons-excel{
+        background-color: #323e47 !important;
+        color: white;
+        position: absolute;
+        left: 95px;
+        top: 65px;
+    }
+    .buttons-excel:hover{
+        background-color: #51595f !important;
+        color: white;
+    }
+    
+    
+    .table-striped {
+        border: 1px solid rgb(235, 235, 235);
+        padding: 20px 20px 20px 20px !important;
+    }
+    .loader-tab{
+        background-color: white;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 80%;
+        border-radius: 20px;
+    }
+    .dataTables_filter {
+        margin-right: 15em;
+    }
+    .select-delete {
+        position: absolute;
+        top: 5em;
+    }
+    .table>caption+thead>tr:first-child>td, .table>caption+thead>tr:first-child>th, .table>colgroup+thead>tr:first-child>td, .table>colgroup+thead>tr:first-child>th, .table>thead:first-child>tr:first-child>td, .table>thead:first-child>tr:first-child>th{
+
+        background-color: #51595f !important; 
+        color: white;
+    }
+    .page-item.active .page-link{
+        background-color: #51595f !important; 
+        border-color: #51595f !important;
+        color: white;
+    }
+    /* .sorting  {
+    } */
+    @media only screen and (max-width: 756px) {
+        .buttons-excel{
+            /* background-color: #3ad074 !important; */
+            color: white;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+        }
+        .select-delete {
+            position: relative;
+            top: 8em;
+        }
+        .form-check-label {
+            margin-bottom: 0;
+            margin-left: 14px !important;
+        }
+        
+    }
+    @media only screen and (max-width: 479px) {
+        label:not(.form-check-label):not(.custom-file-label) {
+            display: table-caption !important;
+        }
+        .select-delete {
+            position: relative;
+            top: 8em;
+            left: 80px !important;
+        }
+    }
+</style>
+</head>
+<body id="body">
+    <%- include('../partial/partial_header.ejs') %>
+    <%- include('../partial/partial_footer.ejs') %>
+    <!-- Body -->
+    <div class="wrapper">
+        <div class="content-wrapper">
+            <!-- Content Header -->
+            <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Email Brand | <b class="keteragan">List</b> </h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Email Brand</a></li>
+                    <li class="breadcrumb-item active keteragan">List</li>
+                    </ol>
+                </div>
+                </div>
+            </div>
+            </div>
+            <!-- End Content Header -->
+            <!-- Content -->
+            <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                <section class="col-lg-12 connectedSortable ui-sortable">
+                    <div class="card" style="position: relative; left: 0px; top: 0px;">
+                    
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="card" id="formCreate" style="display: none;">
+                                <div class="card-header">
+                                    <h3 class="mb-5">Form Create New Data</h3>
+                                    <button id="btn-add-formEmail" class="btn btn-outline-success ml-2" type="button"><i class="fa fa-plus-square" aria-hidden="true"></i> Add New</button>
+                                    <button class="btn btn-outline-danger btn-remove-form button-minus" type="button"><i class="fa fa-trash" aria-hidden="true"></i> Remove</button>
+                                </div>
+                                <div class="card-body">
+                                    <div id="addEmailBrand" >
+                                        <form action="" id="FormEmailBrand">
+                                            <div class="row container-fluid email-brand" >
+                                                <div class="col-md-12" id="email-brand-row">
+                                                    <div class="row justify-content-md-center mt-1 mb-1 selectOpt">
+                                                        <div class="col-md-2 fix-margin2">
+                                                            <label for="">Name</label>
+                                                            <input  type="text" class="form-control input_name" id="name-1" name="name" placeholder="Type name..">
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <label for="">User</label>
+                                                            <select name="user" class="form-control select2 user_emailBrand" id="user-1">
+                                                                <option selected disabled>-- Select User --</option>
+        
+                                                                <% if(dataUser == undefined || dataUser == null ){ %>
+                                                                    <option class="optiongrey" value="">&nbsp;</option>
+                                                                <% } else{ %>
+                                                                    <% dataUser.forEach((rows, index) => {  %>
+                                                                        <option value="<%=rows.rowid%>" data-email= " <%= rows.email %>  " ><%=rows.full_name%></option>
+                                                                    <%})%>
+                                                                <% } %>
+                                                                
+                                                            </select>
+                                                        </div>
+        
+                                                        <div class="col-md-2 fix-margin1">
+                                                            <label for="">Brand</label>
+                                                            <select name="brand" class="form-control select2 brand" class="brand" id="brand-1">
+                                                                <option selected disabled>-- Select Brand --</option>
+        
+                                                                <% if(dataBrand == undefined || dataBrand == null ){ %>
+                                                                    <option class="optiongrey" value="">&nbsp;</option>
+                                                                <% } else{ %>
+                                                                    <% dataBrand.forEach((rows, index) => {  %>
+                                                                        <option value="<%=rows.rowid%>" ><%=rows.label%></option>
+                                                                    <%})%>
+                                                                <% } %>
+
+                                                            </select>
+                                                        </div>
+                                                        
+                                                        <div class="col-md-3 fix-margin2">
+                                                            <label for="">Email</label>
+                                                            <input  type="text" class="form-control email" id="email-1" name="email" readonly>
+                                                            
+                                                        </div>
+                                                        <div class="col-md-2 fix-margin2">
+                                                            <label for="">Status</label>
+                                                            <select name="status" class="form-control select2 status" class="status" id="status-1">
+                                                                <option selected disabled>-- Select Status --</option>
+                                                                <option value="1">Active</option>
+                                                                <option value="0">Non-Active</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div>
+                                        <div class="mt-5">
+                                            <button class="btn btn-secondary m-4" id="cancelAdd"><i class="fa fa-times"></i> Cancel</button>
+                                            <button id="submitFormEmailBrand" class="btn btn-primary " type="button"><i class="fa fa-save"></i> Submit </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="listEmailBrand">
+                                <button class="btn btn-primary my-3" id="btnCreateNew"><i class="fas fa-pen-square"></i> Create New Data</button>
+                                <div style="display: none;" class="alert alert-danger auto-close mx-4 text-center" role="alert">
+                                    <i style="font-size: 15px;" class="fas fa-exclamation-circle">Please select the item to delete!</i>
+                                </div>
+                                <div class="table-responsive">
+                                    <div class="row mx-auto" id="div-delete">
+                                        <div class="col-md-12">
+                                            
+                                            <div class="row justify-content-end">
+                                                <div class="form-inline select-delete">
+                                                    <div class="form-check mr-sm-2">
+                                                        <input style="width: 20px; height: 20px;" class="form-check-input" type="checkbox" id="checkall">
+                                                        <label class="form-check-label" for="checkall">
+                                                        Select all
+                                                        </label>
+                                                    </div>
+                                                    <button type="button" class="btn btn-outline-danger btn-small" id="delsel"><i class="fa fa-trash"></i> Delete</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <table id="list-email-brand" class="display dataTable table table-striped no-margin" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center" rowspan="1" colspan="1" >No.</th>
+                                                <th class="text-left" rowspan="1" colspan="1" >Name</th>
+                                                <th class="text-left" rowspan="1" colspan="1" >User</th>
+                                                <th class="text-left" rowspan="1" colspan="1" >Brand</th>
+                                                <th class="text-left" rowspan="1" colspan="1" >Email</th>
+                                                <th class="text-left" rowspan="1" colspan="1" >Status</th>
+                                                <th class="text-center text-muted">ACTION</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% var i = 1 %>
+                                            <% if(data.length>0) { %>
+                                            <% data.forEach((rows, index) => { %>
+                                            <tr>
+                                                <td style="text-align: center;"><%= i++ %></td>
+                                                <td><%= rows.name_pm %></td>
+
+                                                <% if(dataUser == undefined || dataUser == null ){ %>
+                                                    <td>-</td>
+                                                <% } else{ %>
+                                                    <% dataUser.forEach((rowUser, index) => {  %>
+                                                        <% if (rows.fk_user == rowUser.rowid) { %>
+                                                            <td><b><%= rowUser.full_name %></b></td>
+                                                        <% } %>
+                                                    <%})%>
+                                                <% } %>
+
+                                                <% if(dataBrand == undefined || dataBrand == null ){ %>
+                                                    <td>-</td>
+                                                <% } else{ %>
+
+                                                    <% for( let i = 0; i < dataBrand.length; i++ ) { %>
+                                                        <% if (dataBrand[i].rowid.toString() == rows.fk_brand.toString()) { %>
+                                                            <td><%= dataBrand[i].label %></td>
+                                                        <% } %>
+                                                    <% } %>
+
+                                                <% } %>
+                                                
+                                                <td><%= rows.email_pm %></td>
+
+                                                <% let status = rows.status %> 
+                                                <% if (status == 1) { %>
+                                                    <td><span style=" background-color: #35f25a; font-weight: bold;" class="badge ">Active</span></td>
+                                                <% } else {%>
+                                                    <td><span style="background-color: #ff00008a;" class="badge ">Non-active</span></td>
+                                                <% } %> 
+
+                                                <td style="text-align: center;">
+                                                    <a href="/email-brand/email-brand/detail/<%= rows.rowid %>" class="btn btn-primary"><i class="fas fa-vr-cardboard"></i> Detail</a>
+                                                </td>
+                                                <td class="my-auto mx-auto" style="text-align: center;"><input style="width: 20px; height: 20px;" type="checkbox" class="checkitem" value="<%= rows.rowid %>"></td>
+                                            </tr>
+                                            <% }) %>
+                                            <% }else{ %>
+                                            <tr>
+                                                <td colspan="7" style="text-align: center;">Data Not Found</td>
+                                            </tr>
+                                            <% } %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                    </div>
+                </section>
+                </div>
+            </div>
+            </section>
+            <!-- Content -->
+        </div>
+    </div>
+
+    <!-- End Body -->
+    <%- include('../partial/partial_js.ejs') %>
+    <script type="text/javascript" src="//cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+    <script>
+
+        $( "#btnCreateNew" ).click(function(event) {
+            event.preventDefault();
+            $('#listEmailBrand').hide();
+            $('#formCreate').slideDown("slow");
+            $('#formCreate').show()
+            $('.keteragan').html('Create')
+        });
+
+        $("#cancelAdd").click(function(event){
+            event.preventDefault();
+            $('#formCreate').slideUp("slow");
+            $('#listEmailBrand').show();
+            // $('#formCreate').hide();
+            $('.keteragan').html('List')
+        });
+
+        $(document).ready(function() {
+            $('.select2').select2({
+                width: '100%'
+            });
+        });
+
+        $(document).ready(function() {
+            $('#list-email-brand').DataTable({
+                dom: '<<"mb-3"B><"d-flex justify-content-between align-items-center"lf><t><"#df"<"pull-left" i><"pull-right"p>>>',
+                buttons     : ['excel'],
+
+            });
+            $('.table-responsive .buttons-excel').html('<span><i class="fas fa-file-download"></i> Excel</span>')
+        });
+
+        
+        $('#btn-add-formEmail').on("click",function(){
+            let jmlselect = $('.selectOpt').length
+            let currNum = jmlselect + 1
+
+            let name =  $('#name-1').val()
+            let user =  $('#user-1').val()
+            let brand =  $('#brand-1').val()
+            let email =  $('#email-1').val()
+            let status =  $('#status-1').val()
+
+            let name2 =  $('#name-'+jmlselect).val()
+            let user2 =  $('#user-'+jmlselect).val()
+            let brand2 =  $('#brand-'+jmlselect).val()
+            let email2 =  $('#email-'+jmlselect).val()
+            let status2 =  $('#status-'+jmlselect).val()
+
+            if (name == '') {
+                swal("","Enter the form first !","error")
+            } else {
+                if (user == null || user == '') {
+                    swal("","Enter the form first !","error")
+                } else {
+                    if (brand == null || brand == '') {
+                        swal("","Enter the form first !","error")
+                    } else {
+                        if (email == null || email == '') {
+                            swal("","Enter the form first !","error")
+                        }else {
+                            if (status == null || status == '') {
+                                swal("","Enter the form first !","error")
+                            } else {
+
+                                if (name2 == '') {
+                                    swal("","Enter the form first !","error")
+                                } else {
+                                    if (user2 == null || user2 == '') {
+                                        swal("","Enter the form first !","error")
+                                    } else {
+                                        if (brand2 == null || brand2 == '') {
+                                            swal("","Enter the form first !","error")
+                                        } else {
+                                            if (email2 == null || email2 == '') {
+                                                swal("","Enter the form first !","error")
+                                            }else {
+                                                if (status2 == null || status2 == '') {
+                                                    swal("","Enter the form first !","error")
+                                                } else {
+
+                                                    let opt = ''
+                                                    opt += `
+                                                            <div class="row form-${currNum}">
+                                                                <div class="col-md-12">
+                                                                    <div class="row justify-content-md-center mb-1 mt-1 selectOpt">
+                                                                        <div class="col-md-2 fix-margin2">
+                                                                            <input type="text" class="form-control input_name" id="name-${currNum}" name="name" placeholder="Type name..">
+                                                                        </div>
+
+                                                                        <div class="col-md-3">
+                                                                            <select name="user" class="form-control select2 user_emailBrand" id="user-${currNum}">
+                                                                                <option selected disabled>-- Select User --</option>
+
+                                                                                <% if(dataUser == undefined || dataUser == null ){ %>
+                                                                                    <option class="optiongrey" value="">&nbsp;</option>
+                                                                                <% } else{ %>
+                                                                                    <% dataUser.forEach((rows, index) => {  %>
+                                                                                        <option value="<%=rows.rowid%>" data-email= " <%=rows.email%> " ><%=rows.full_name%></option>
+                                                                                    <%})%>
+                                                                                <% } %>
+                                                                                
+                                                                            </select>
+                                                                        </div>
+
+                                                                        <div class="col-md-2">
+                                                                            <select name="brand" class="form-control select2 brand" class="brand" id="brand-${currNum}">
+                                                                                <option selected disabled>-- Select Brand --</option>
+
+                                                                                <% if(dataBrand == undefined || dataBrand == null ){ %>
+                                                                                    <option class="optiongrey" value="">&nbsp;</option>
+                                                                                <% } else{ %>
+                                                                                    <% dataBrand.forEach((rows, index) => {  %>
+                                                                                        <option value="<%=rows.rowid%>" ><%=rows.label%></option>
+                                                                                    <%})%>
+                                                                                <% } %>
+                                                                                
+                                                                            </select>
+                                                                        </div>
+
+                                                                        <div class="col-md-3">
+                                                                            <input  type="text" class="form-control email" id="email-${currNum}" name="email" readonly>
+
+                                                                        </div>
+                                                                        <div class="col-md-2">
+                                                                            <select name="status" class="form-control select2 status" class="status" id="status-${currNum}">
+                                                                                <option selected disabled>-- Select status --</option>
+
+                                                                                <option value="1">Active</option>
+                                                                                <option value="0">Non-Active</option>
+                                                                                
+                                                                            </select>
+                                                                        </div>
+                                                                </div>
+                                                            </div>
+                                                            `
+                                                    $('#email-brand-row').append(opt)
+                                                    $('.select2').select2()
+                                                    $('.user_emailBrand').change(function(){
+                                                        let inputEmail = $(this).parent().next().next().children('.email')
+                                                        var optionSelected = $(this).find('option:selected').attr('data-email');
+                                                        inputEmail.val(optionSelected);
+                                                    });
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        })
+
+        
+        $(".btn-remove-form").on("click", function (event) {
+            $('.form-'+$('.selectOpt').length).closest("div").remove();
+        });
+
+        $('.user_emailBrand').change(function(){
+            let inputEmail = $(this).parent().next().next().children('.email')
+            var optionSelected = $(this).find('option:selected').attr('data-email');
+            inputEmail.val(optionSelected);
+        });
+
+        
+        $('#submitFormEmailBrand').on("click",function(){
+            let jmlselect = $('.selectOpt').length
+
+            let name =  $('#name-1').val()
+            let user =  $('#user-1').val()
+            let brand =  $('#brand-1').val()
+            let email =  $('#email-1').val()
+            let status =  $('#status-1').val()
+
+            let name2 =  $('#name-'+jmlselect).val()
+            let user2 =  $('#user-'+jmlselect).val()
+            let brand2 =  $('#brand-'+jmlselect).val()
+            let email2 =  $('#email-'+jmlselect).val()
+            let status2 =  $('#status-'+jmlselect).val()
+
+            if (name == '') {
+                swal("","Complete the form !","error")
+            } else {
+                if (user == null || user == '') {
+                    swal("","Complete the form !","error")
+                } else {
+                    if (brand == null || brand == '') {
+                        swal("","Complete the form !","error")
+                    } else {
+                        if (email == null || email == '') {
+                            swal("","Complete the form !","error")
+                        }else {
+                            if (status == null || status == '') {
+                                swal("","Complete the form !","error")
+                            } else {
+
+                                if (name2 == '') {
+                                    swal("","Complete the form !","error")
+                                } else {
+                                    if (user2 == null || user2 == '') {
+                                        swal("","Complete the form !","error")
+                                    } else {
+                                        if (brand2 == null || brand2 == '') {
+                                            swal("","Complete the form !","error")
+                                        } else {
+                                            if (email2 == null || email2 == '') {
+                                                swal("","Complete the form !","error")
+                                            }else {
+                                                if (status2 == null || status2 == '') {
+                                                    swal("","Complete the form !","error")
+                                                } else {
+
+                                                    swal({
+                                                    title: "",
+                                                    text: "Create New Data ?",
+                                                    type: "warning",
+                                                    showCancelButton: true,
+                                                    confirmButtonColor: "#337ab7",
+                                                    confirmButtonText: "Create",
+                                                    cancelButtonText: "Cancel",
+                                                    closeOnConfirm: true,
+                                                    closeOnCancel: true
+                                                },
+                                                    function (isConfirm) {
+                                                        if (isConfirm) {
+                                                            $.ajax({
+                                                                'url':'/email-brand/save',
+                                                                'type':'POST',
+                                                                'data':$('#FormEmailBrand').serialize(),
+                                                                'success':function(result){
+                                                                    if(result.status == 200){
+                                                                        swal("Successfully!","","success")
+                                                                        setTimeout(function(){
+                                                                            window.location.href='/email-brand/email-brand'
+                                                                        },2000)
+                                                                    } else {
+                                                                        swal("Failed","","error")
+                                                                    }
+                                                                }
+                                                            })
+                                                        }
+                                                    });
+                                                    return false;
+
+                                                    
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+        })
+
+        //
+        function closeAlert(){
+            setInterval(() => {
+                $('.auto-close').slideUp(200)
+            }, 4000);
+        }
+
+        $('#checkall').change(function(){
+            $('.checkitem').prop("checked", $(this).prop("checked"))
+        })
+
+        $('#delsel').click(function(){
+            // console.log('click');
+            let rowid = $('.checkitem:checked').map(function(){
+                return $(this).val()
+            }).get().join(' ')
+
+            if (rowid.length == 0) {
+                $('.auto-close').show()
+                closeAlert()
+            } else {
+                $('.auto-close').hide()
+                swal({
+                    title: "Are you sure?",
+                    text: "You will not be able to recover this data!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes, delete!",
+                    cancelButtonText: "No, cancel!",
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            $.post('/email-brand/delete', {rowid: rowid}, function(result){
+                                console.log(result);
+                                swal("Deleted!","Delete data successfully","success")
+                                setTimeout(function(){
+                                    window.location.href='/email-brand/email-brand'
+                                },2000)
+                            })
+                        } else {
+                            swal("Cancelled", "Ok, the data is safe.", "error");
+                        }
+                    });
+                    return false;
+            }
+        })
+
+        if ($('#list-email-brand > tbody')[0].innerText == 'Data Not Found') {
+            $('#div-delete').hide()
+        } else {
+            $('#div-delete').show()
+        }
+
+    </script>
+</body>
+</html>
